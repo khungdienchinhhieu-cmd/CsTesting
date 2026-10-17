@@ -40,9 +40,10 @@ Trình duyệt **không thể mở cổng công khai** để người khác kế
 
 ## Cách bật link Pages
 
-1. Merge PR vào `main` (workflow `.github/workflows/pages.yml` chỉ chạy trên `main` hoặc chạy tay).
-2. **Settings → Pages → Source: GitHub Actions**.
-3. Sau khi workflow `pages` xanh: `https://<user>.github.io/<repo>/`.
+1. Code đã ở `main`; workflow `.github/workflows/pages.yml` chạy trên `main` hoặc chạy tay.
+2. **Settings → Pages → Source: GitHub Actions** (bắt buộc một lần; tài khoản agent không có quyền admin để tự bật).
+3. Chạy lại workflow `pages` (hoặc push thêm một commit). Khi Pages đã bật, workflow deploy và in link `https://<user>.github.io/<repo>/`.
+4. Nếu Pages chưa bật, workflow vẫn xanh và chỉ cảnh báo, không làm đỏ CI.
 4. Bản tĩnh tự nhận biết `*.github.io`: màn Chơi online để trống URL và ghi chú chỉ chơi offline; mọi dữ liệu vẫn nằm trong trình duyệt.
 
 ## Chi phí tham khảo (kiểm tra lại trước khi dùng)
