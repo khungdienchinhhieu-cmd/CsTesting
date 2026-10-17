@@ -57,7 +57,7 @@ Yêu cầu: Node.js >= 22.12, pnpm 10.x. Không cần GPU rời; preset `competi
 | GitHub Codespaces | 120 core-giờ/tháng (60 giờ máy 2 core) + 15 GB | Chạy thử cả client + server, mở port public tạm thời | Máy tự tắt khi rảnh; không phải hosting production |
 | GitHub Actions | Miễn phí cho repo public | Build/test/deploy tự động | Không host server chạy dài (job có hạn, không có ingress) |
 
-Pipeline Pages đã có ở `.github/workflows/pages.yml`. Để bật: **Settings → Pages → Source: GitHub Actions**, sau đó push/merge lên `main` (hoặc chạy workflow `pages` thủ công). Link dạng `https://<user>.github.io/CsTesting/`. Bản tĩnh chỉ chơi **offline**; muốn online phải nhập `wss://…/ws` của một máy chủ Node riêng.
+Chi tiết kiến trúc và chi phí: `docs/HOSTING.md`. Pipeline Pages đã có ở `.github/workflows/pages.yml`. Để bật: **Settings → Pages → Source: GitHub Actions**, sau đó push/merge lên `main` (hoặc chạy workflow `pages` thủ công). Link dạng `https://<user>.github.io/CsTesting/`. Bản tĩnh chỉ chơi **offline**; muốn online phải nhập `wss://…/ws` của một máy chủ Node riêng.
 
 ## Online
 

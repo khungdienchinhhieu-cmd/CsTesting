@@ -150,6 +150,7 @@ Hoặc `docker compose up --build` (chưa chạy được trong sandbox — xem 
 - `apps/client/src/ui/menus.ts` — thẻ TRỢ NĂNG trong Cài đặt.
 - `apps/client/src/main.ts` — áp `data-color-blind`, `data-high-contrast`, `data-reduced-motion`; dừng xoay look-dev khi giảm chuyển động.
 - `.github/workflows/pages.yml` — build tĩnh và deploy GitHub Pages.
+- `docs/HOSTING.md` — so sánh Pages / Actions / dedicated server / WebRTC P2P; vì sao Actions không làm gateway.
 - `apps/client/src/sim/online.ts` — trên `*.github.io` để trống URL server và hiện gợi ý.
 
 **Cách chạy**

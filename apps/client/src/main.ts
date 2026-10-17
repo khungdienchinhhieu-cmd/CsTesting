@@ -181,7 +181,8 @@ async function main(): Promise<void> {
 
   applyRuntime();
   menus.setBackendInfo(info.backend, info.gpuName);
-  menus.setStatus(assets.missing() ? 'Một số asset dùng fallback — xem asset manifest.' : 'Asset procedural đã sẵn sàng.');
+  const staticHost = location.hostname.endsWith('github.io');
+  menus.setStatus(staticHost ? 'Bản tĩnh GitHub Pages: chơi offline với bot (không cần server).' : assets.missing() ? 'Một số asset dùng fallback — xem asset manifest.' : 'Asset procedural đã sẵn sàng.');
   menus.refreshProfile();
   enterMenu();
 
