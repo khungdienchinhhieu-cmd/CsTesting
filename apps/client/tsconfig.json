@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "noEmit": true,
+    "declaration": false,
+    "sourceMap": false,
+    "types": ["vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@tactical/shared": ["../../packages/shared/src/index.ts"],
+      "@tactical/shared/bot-api": ["../../packages/shared/src/bot-api.ts"],
+      "@tactical/bots": ["../../packages/bots/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
+}

@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "shared": {
+    "thinkHz": 10,
+    "senseHz": 20,
+    "fovDeg": 100,
+    "hearingRangeM": 42,
+    "hearingSigmaDeg": 14,
+    "beliefCellM": 2.5,
+    "beliefDecayPerSec": 0.1,
+    "commsDelayMinSec": 0.4,
+    "commsDelayMaxSec": 1.2,
+    "commsWrongChance": 0.08,
+    "maxTurnRateDegPerSec": 420,
+    "headTurnSpeedDegPerSec": 160,
+    "corpseInfoTtlSec": 12,
+    "gunshotHearingMul": 1.7,
+    "footstepHearingMul": 0.85,
+    "smokeVisionPenalty": 1.0,
+    "flashRecoveryAwareness": 0.35,
+    "stuckWindowSec": 0.7,
+    "stuckMinMoveM": 0.15,
+    "navPathReplanSec": 1.4,
+    "coverCheckRadiusM": 1.2,
+    "peekHoldMinSec": 0.35,
+    "peekHoldMaxSec": 1.4,
+    "reactFirstSightPenalty": 1.25
+  },
+  "tiers": {
+    "rookie": {
+      "label": "Rookie", "reactionMedianMs": 380, "reactionSigma": 0.34,
+      "aimErrorDeg": 2.6, "aimSpeedDegPerSec": 240, "flickOvershoot": 0.34,
+      "sprayControl": 0.32, "burstDiscipline": 0.35, "counterStrafeSkill": 0.3,
+      "utilityDiscipline": 0.3, "teamwork": 0.35, "patience": 0.35, "aggression": 0.58,
+      "headshotAimBias": 0.12, "mistakeRate": 0.22, "commsChance": 0.3,
+      "crosshairHeightM": 1.42, "preaimSkill": 0.35, "soundAwareness": 0.4,
+      "peekSkill": 0.3, "tradeSkill": 0.3, "clutchSkill": 0.25
+    },
+    "regular": {
+      "label": "Regular", "reactionMedianMs": 300, "reactionSigma": 0.3,
+      "aimErrorDeg": 1.8, "aimSpeedDegPerSec": 320, "flickOvershoot": 0.26,
+      "sprayControl": 0.52, "burstDiscipline": 0.55, "counterStrafeSkill": 0.5,
+      "utilityDiscipline": 0.5, "teamwork": 0.55, "patience": 0.5, "aggression": 0.5,
+      "headshotAimBias": 0.2, "mistakeRate": 0.14, "commsChance": 0.55,
+      "crosshairHeightM": 1.5, "preaimSkill": 0.52, "soundAwareness": 0.58,
+      "peekSkill": 0.5, "tradeSkill": 0.5, "clutchSkill": 0.45
+    },
+    "veteran": {
+      "label": "Veteran", "reactionMedianMs": 250, "reactionSigma": 0.27,
+      "aimErrorDeg": 1.2, "aimSpeedDegPerSec": 400, "flickOvershoot": 0.19,
+      "sprayControl": 0.7, "burstDiscipline": 0.7, "counterStrafeSkill": 0.68,
+      "utilityDiscipline": 0.68, "teamwork": 0.7, "patience": 0.65, "aggression": 0.48,
+      "headshotAimBias": 0.3, "mistakeRate": 0.09, "commsChance": 0.72,
+      "crosshairHeightM": 1.56, "preaimSkill": 0.68, "soundAwareness": 0.72,
+      "peekSkill": 0.66, "tradeSkill": 0.68, "clutchSkill": 0.62
+    },
+    "elite": {
+      "label": "Elite", "reactionMedianMs": 205, "reactionSigma": 0.24,
+      "aimErrorDeg": 0.78, "aimSpeedDegPerSec": 500, "flickOvershoot": 0.13,
+      "sprayControl": 0.84, "burstDiscipline": 0.82, "counterStrafeSkill": 0.82,
+      "utilityDiscipline": 0.82, "teamwork": 0.82, "patience": 0.78, "aggression": 0.45,
+      "headshotAimBias": 0.4, "mistakeRate": 0.05, "commsChance": 0.86,
+      "crosshairHeightM": 1.6, "preaimSkill": 0.82, "soundAwareness": 0.84,
+      "peekSkill": 0.8, "tradeSkill": 0.82, "clutchSkill": 0.78
+    },
+    "pro": {
+      "label": "Pro", "reactionMedianMs": 170, "reactionSigma": 0.22,
+      "aimErrorDeg": 0.52, "aimSpeedDegPerSec": 610, "flickOvershoot": 0.09,
+      "sprayControl": 0.93, "burstDiscipline": 0.9, "counterStrafeSkill": 0.92,
+      "utilityDiscipline": 0.92, "teamwork": 0.9, "patience": 0.86, "aggression": 0.42,
+      "headshotAimBias": 0.5, "mistakeRate": 0.025, "commsChance": 0.94,
+      "crosshairHeightM": 1.62, "preaimSkill": 0.92, "soundAwareness": 0.92,
+      "peekSkill": 0.9, "tradeSkill": 0.9, "clutchSkill": 0.86
+    }
+  },
+  "personality": {
+    "aggression": {"min": 0.25, "max": 0.85, "roundJitter": 0.08},
+    "patience": {"min": 0.25, "max": 0.85, "roundJitter": 0.08},
+    "riskTaking": {"min": 0.2, "max": 0.85, "roundJitter": 0.1},
+    "utilityDiscipline": {"min": 0.3, "max": 0.9, "roundJitter": 0.06},
+    "teamwork": {"min": 0.3, "max": 0.95, "roundJitter": 0.05},
+    "tiltSensitivity": {"min": 0.1, "max": 0.8, "roundJitter": 0.05}
+  },
+  "roles": ["entry", "support", "lurker", "anchor", "awper", "igl"],
+  "tactics": {
+    "T": {
+      "default": {"weightBase": 0.3, "minMoney": 0, "aggression": 0.5},
+      "rush": {"weightBase": 0.14, "minMoney": 0, "aggression": 0.85},
+      "split": {"weightBase": 0.16, "minMoney": 2500, "aggression": 0.6},
+      "execute": {"weightBase": 0.2, "minMoney": 4000, "aggression": 0.55},
+      "fake": {"weightBase": 0.1, "minMoney": 2500, "aggression": 0.5},
+      "save": {"weightBase": 0.1, "minMoney": 0, "aggression": 0.1}
+    },
+    "CT": {
+      "default": {"weightBase": 0.35, "minMoney": 0, "aggression": 0.4},
+      "aggressiveSetup": {"weightBase": 0.15, "minMoney": 0, "aggression": 0.75},
+      "stackA": {"weightBase": 0.15, "minMoney": 0, "aggression": 0.45},
+      "stackB": {"weightBase": 0.15, "minMoney": 0, "aggression": 0.45},
+      "retake": {"weightBase": 0.1, "minMoney": 0, "aggression": 0.55},
+      "save": {"weightBase": 0.1, "minMoney": 0, "aggression": 0.1}
+    }
+  },
+  "aim": {
+    "fittsA": 0.09,
+    "fittsB": 0.11,
+    "minJerkDurationScale": 1.0,
+    "microCorrectionHz": 6,
+    "targetTrackingGain": 0.72,
+    "recoilCompensationError": 0.18,
+    "prefireChanceHighConfidence": 0.22
+  },
+  "budget": {
+    "maxThinkPerTickMs": 2.5,
+    "maxPerceptionChecksPerTick": 8,
+    "pathCacheSeconds": 2.0,
+    "workerThreads": 1
+  }
+}

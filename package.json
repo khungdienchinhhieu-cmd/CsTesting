@@ -1,0 +1,40 @@
+{
+  "name": "tactical-strike",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.34.7",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "dev:client": "pnpm --filter @tactical/client dev",
+    "dev:server": "pnpm --filter @tactical/gameserver dev",
+    "dev:api": "pnpm --filter @tactical/api dev",
+    "validate:assets": "node --experimental-strip-types tools/validate-assets.ts",
+    "validate:anim": "node --experimental-strip-types tools/validate-anim.ts",
+    "validate:data": "node --experimental-strip-types tools/validate-data.ts",
+    "release:check": "node --experimental-strip-types tools/release-check.ts",
+    "bot-sim": "node --experimental-strip-types tools/bot-sim.ts",
+    "netsim": "node --experimental-strip-types tools/netsim.ts",
+    "loadtest": "node --experimental-strip-types tools/loadtest.ts",
+    "bench:sim": "node --experimental-strip-types tools/bench-sim.ts",
+    "ci": "pnpm lint && pnpm typecheck && pnpm test && pnpm validate:data && pnpm validate:anim && pnpm validate:assets && pnpm release:check:dev",
+    "release:check:dev": "node --experimental-strip-types tools/release-check.ts --allow-placeholder",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "22.20.5",
+    "eslint": "9.39.5",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.2",
+    "vitest": "4.1.12"
+  }
+}

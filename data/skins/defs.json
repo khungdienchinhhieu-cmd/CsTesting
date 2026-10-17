@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "collections": [
+    {"id": "sandfall", "name": "Sandfall", "description": "Bộ sưu tập lấy cảm hứng từ sa mạc và gió cát."},
+    {"id": "neon_drift", "name": "Neon Drift", "description": "Bộ sưu tập đêm đô thị, ánh đèn lạnh."},
+    {"id": "forge", "name": "Forge", "description": "Kim loại nóng, oxy hoá và dấu vết thời gian."}
+  ],
+  "skins": [
+    {
+      "id": "finish_dune_veil", "name": "Dune Veil", "rarity": "Rare", "collection": "sandfall",
+      "weapons": ["rifle_t", "rifle_ct"], "status": "active", "author": "Tactical Strike Art",
+      "palette": ["#c9a05a", "#8a6a3c", "#e8d3a8", "#3a2c1c"],
+      "patternScale": 1.4, "patternSeedMode": "uv_shift", "flakeDensity": 0.0, "emissive": "#000000",
+      "wearEdgeColor": "#5b4528", "roughnessBase": 0.62, "metalnessBase": 0.25, "textureBudget": 1024
+    },
+    {
+      "id": "finish_night_grid", "name": "Night Grid", "rarity": "Epic", "collection": "neon_drift",
+      "weapons": ["rifle_ct", "smg_ct"], "status": "active", "author": "Tactical Strike Art",
+      "palette": ["#16202e", "#2c4a66", "#5fd0e8", "#0a1018"],
+      "patternScale": 2.2, "patternSeedMode": "uv_shift", "flakeDensity": 0.15, "emissive": "#2a7080",
+      "wearEdgeColor": "#0e1720", "roughnessBase": 0.45, "metalnessBase": 0.45, "textureBudget": 1024
+    },
+    {
+      "id": "finish_ember_wash", "name": "Ember Wash", "rarity": "Rare", "collection": "forge",
+      "weapons": ["pistol_t", "pistol_ct", "heavy_pistol"], "status": "active", "author": "Tactical Strike Art",
+      "palette": ["#3a2118", "#a84a22", "#f0a15a", "#1a0f0a"],
+      "patternScale": 1.8, "patternSeedMode": "uv_shift", "flakeDensity": 0.0, "emissive": "#000000",
+      "wearEdgeColor": "#241410", "roughnessBase": 0.55, "metalnessBase": 0.3, "textureBudget": 512
+    },
+    {
+      "id": "finish_frostline", "name": "Frostline", "rarity": "Epic", "collection": "neon_drift",
+      "weapons": ["sniper"], "status": "active", "author": "Tactical Strike Art",
+      "palette": ["#cfe3ec", "#7aa6bd", "#eef9ff", "#28414f"],
+      "patternScale": 2.6, "patternSeedMode": "uv_shift", "flakeDensity": 0.3, "emissive": "#102028",
+      "wearEdgeColor": "#5b7684", "roughnessBase": 0.4, "metalnessBase": 0.35, "textureBudget": 1024
+    },
+    {
+      "id": "finish_verdigris", "name": "Verdigris", "rarity": "Uncommon", "collection": "forge",
+      "weapons": ["smg_t", "shotgun"], "status": "active", "author": "Tactical Strike Art",
+      "palette": ["#3f5a42", "#6e8f63", "#b8c4a0", "#1f2d22"],
+      "patternScale": 1.2, "patternSeedMode": "uv_shift", "flakeDensity": 0.05, "emissive": "#000000",
+      "wearEdgeColor": "#2a3a2c", "roughnessBase": 0.68, "metalnessBase": 0.2, "textureBudget": 512
+    },
+    {
+      "id": "finish_obsidian_flux", "name": "Obsidian Flux", "rarity": "Legendary", "collection": "neon_drift",
+      "weapons": ["knife"], "status": "active", "author": "Tactical Strike Art",
+      "palette": ["#0b0b10", "#2b1a3a", "#8a5cff", "#05050a"],
+      "patternScale": 3.0, "patternSeedMode": "uv_shift", "flakeDensity": 0.0, "emissive": "#5a2aa0",
+      "wearEdgeColor": "#1a1224", "roughnessBase": 0.32, "metalnessBase": 0.6, "textureBudget": 1024,
+      "iridescence": 0.35
+    }
+  ],
+  "wearBuckets": [
+    {"id": "pristine", "name": "Pristine", "min": 0.0, "max": 0.07},
+    {"id": "light", "name": "Light", "min": 0.07, "max": 0.15},
+    {"id": "worn", "name": "Worn", "min": 0.15, "max": 0.38},
+    {"id": "heavy", "name": "Heavy", "min": 0.38, "max": 0.45},
+    {"id": "scarred", "name": "Scarred", "min": 0.45, "max": 1.0}
+  ],
+  "rarityWeights": {
+    "Common": 0.7992, "Uncommon": 0.1598, "Rare": 0.032, "Epic": 0.008, "Legendary": 0.0008, "Exotic": 0.0002
+  },
+  "exoticDesignOnly": true
+}

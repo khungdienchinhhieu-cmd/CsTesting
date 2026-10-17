@@ -1,0 +1,1161 @@
+{
+  "version": 1,
+  "rig": {
+    "id": "humanoid_v1",
+    "maxBones": 55,
+    "root": "root",
+    "bones": [
+      "root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "neck",
+      "head",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "thumb_l",
+      "index_l",
+      "grip_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "thumb_r",
+      "index_r",
+      "grip_r",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "toe_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "toe_r",
+      "weapon_root",
+      "weapon_slide",
+      "weapon_mag",
+      "weapon_bolt",
+      "weapon_hammer",
+      "weapon_pump",
+      "backpack",
+      "bomb",
+      "armor_plate",
+      "helmet",
+      "radio",
+      "hit_head",
+      "hit_chest",
+      "hit_pelvis",
+      "hit_foot_l",
+      "hit_foot_r"
+    ]
+  },
+  "clips": [
+    {
+      "name": "loco_idle",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 2.0,
+      "blendIn": 0.25,
+      "blendOut": 0.25,
+      "source": "procedural",
+      "proc": "breathe",
+      "events": []
+    },
+    {
+      "name": "loco_walk_f",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 0.9,
+      "blendIn": 0.15,
+      "blendOut": 0.15,
+      "source": "procedural",
+      "proc": "walk",
+      "dir": [
+        0,
+        1
+      ],
+      "events": [
+        {
+          "at": 0.27,
+          "event": "footstep_l"
+        },
+        {
+          "at": 0.702,
+          "event": "footstep_r"
+        }
+      ]
+    },
+    {
+      "name": "loco_walk_b",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 0.95,
+      "blendIn": 0.15,
+      "blendOut": 0.15,
+      "source": "procedural",
+      "proc": "walk",
+      "dir": [
+        0,
+        -1
+      ],
+      "events": [
+        {
+          "at": 0.285,
+          "event": "footstep_l"
+        },
+        {
+          "at": 0.741,
+          "event": "footstep_r"
+        }
+      ]
+    },
+    {
+      "name": "loco_walk_l",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 0.95,
+      "blendIn": 0.15,
+      "blendOut": 0.15,
+      "source": "procedural",
+      "proc": "walk",
+      "dir": [
+        -1,
+        0
+      ],
+      "events": [
+        {
+          "at": 0.285,
+          "event": "footstep_l"
+        },
+        {
+          "at": 0.741,
+          "event": "footstep_r"
+        }
+      ]
+    },
+    {
+      "name": "loco_walk_r",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 0.95,
+      "blendIn": 0.15,
+      "blendOut": 0.15,
+      "source": "procedural",
+      "proc": "walk",
+      "dir": [
+        1,
+        0
+      ],
+      "events": [
+        {
+          "at": 0.285,
+          "event": "footstep_r"
+        },
+        {
+          "at": 0.741,
+          "event": "footstep_l"
+        }
+      ]
+    },
+    {
+      "name": "loco_run_f",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 0.62,
+      "blendIn": 0.12,
+      "blendOut": 0.12,
+      "source": "procedural",
+      "proc": "run",
+      "dir": [
+        0,
+        1
+      ],
+      "events": [
+        {
+          "at": 0.186,
+          "event": "footstep_l"
+        },
+        {
+          "at": 0.484,
+          "event": "footstep_r"
+        }
+      ]
+    },
+    {
+      "name": "loco_run_b",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 0.68,
+      "blendIn": 0.12,
+      "blendOut": 0.12,
+      "source": "procedural",
+      "proc": "run",
+      "dir": [
+        0,
+        -1
+      ],
+      "events": [
+        {
+          "at": 0.204,
+          "event": "footstep_l"
+        },
+        {
+          "at": 0.53,
+          "event": "footstep_r"
+        }
+      ]
+    },
+    {
+      "name": "loco_run_l",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 0.66,
+      "blendIn": 0.12,
+      "blendOut": 0.12,
+      "source": "procedural",
+      "proc": "run",
+      "dir": [
+        -1,
+        0
+      ],
+      "events": [
+        {
+          "at": 0.198,
+          "event": "footstep_l"
+        },
+        {
+          "at": 0.515,
+          "event": "footstep_r"
+        }
+      ]
+    },
+    {
+      "name": "loco_run_r",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 0.66,
+      "blendIn": 0.12,
+      "blendOut": 0.12,
+      "source": "procedural",
+      "proc": "run",
+      "dir": [
+        1,
+        0
+      ],
+      "events": [
+        {
+          "at": 0.198,
+          "event": "footstep_r"
+        },
+        {
+          "at": 0.515,
+          "event": "footstep_l"
+        }
+      ]
+    },
+    {
+      "name": "loco_crouch_idle",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 2.2,
+      "blendIn": 0.2,
+      "blendOut": 0.2,
+      "source": "procedural",
+      "proc": "crouch_idle",
+      "events": []
+    },
+    {
+      "name": "loco_crouch_walk",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 1.1,
+      "blendIn": 0.18,
+      "blendOut": 0.18,
+      "source": "procedural",
+      "proc": "crouch_walk",
+      "events": [
+        {
+          "at": 0.3,
+          "event": "footstep_l"
+        },
+        {
+          "at": 0.8,
+          "event": "footstep_r"
+        }
+      ]
+    },
+    {
+      "name": "loco_jump_start",
+      "layer": "locomotion",
+      "loop": false,
+      "duration": 0.2,
+      "blendIn": 0.06,
+      "blendOut": 0.1,
+      "source": "procedural",
+      "proc": "jump",
+      "events": [
+        {
+          "at": 0.1,
+          "event": "jump"
+        }
+      ]
+    },
+    {
+      "name": "loco_air",
+      "layer": "locomotion",
+      "loop": true,
+      "duration": 0.6,
+      "blendIn": 0.12,
+      "blendOut": 0.15,
+      "source": "procedural",
+      "proc": "air",
+      "events": []
+    },
+    {
+      "name": "loco_land",
+      "layer": "locomotion",
+      "loop": false,
+      "duration": 0.28,
+      "blendIn": 0.04,
+      "blendOut": 0.15,
+      "source": "procedural",
+      "proc": "land",
+      "events": [
+        {
+          "at": 0.05,
+          "event": "land"
+        }
+      ]
+    },
+    {
+      "name": "loco_turn_l",
+      "layer": "locomotion",
+      "loop": false,
+      "duration": 0.5,
+      "blendIn": 0.15,
+      "blendOut": 0.2,
+      "source": "procedural",
+      "proc": "turn",
+      "dir": [
+        -1,
+        0
+      ],
+      "events": []
+    },
+    {
+      "name": "loco_turn_r",
+      "layer": "locomotion",
+      "loop": false,
+      "duration": 0.5,
+      "blendIn": 0.15,
+      "blendOut": 0.2,
+      "source": "procedural",
+      "proc": "turn",
+      "dir": [
+        1,
+        0
+      ],
+      "events": []
+    },
+    {
+      "name": "upper_pistol_idle",
+      "layer": "upper",
+      "mask": "upper_body",
+      "holdType": "pistol",
+      "loop": true,
+      "duration": 2.0,
+      "blendIn": 0.2,
+      "source": "procedural",
+      "proc": "hold_pistol",
+      "events": []
+    },
+    {
+      "name": "upper_smg_idle",
+      "layer": "upper",
+      "mask": "upper_body",
+      "holdType": "smg",
+      "loop": true,
+      "duration": 2.0,
+      "blendIn": 0.2,
+      "source": "procedural",
+      "proc": "hold_smg",
+      "events": []
+    },
+    {
+      "name": "upper_rifle_idle",
+      "layer": "upper",
+      "mask": "upper_body",
+      "holdType": "rifle",
+      "loop": true,
+      "duration": 2.0,
+      "blendIn": 0.2,
+      "source": "procedural",
+      "proc": "hold_rifle",
+      "events": []
+    },
+    {
+      "name": "upper_shotgun_idle",
+      "layer": "upper",
+      "mask": "upper_body",
+      "holdType": "shotgun",
+      "loop": true,
+      "duration": 2.0,
+      "blendIn": 0.2,
+      "source": "procedural",
+      "proc": "hold_shotgun",
+      "events": []
+    },
+    {
+      "name": "upper_sniper_idle",
+      "layer": "upper",
+      "mask": "upper_body",
+      "holdType": "sniper",
+      "loop": true,
+      "duration": 2.0,
+      "blendIn": 0.2,
+      "source": "procedural",
+      "proc": "hold_sniper",
+      "events": []
+    },
+    {
+      "name": "upper_knife_idle",
+      "layer": "upper",
+      "mask": "upper_body",
+      "holdType": "knife",
+      "loop": true,
+      "duration": 2.0,
+      "blendIn": 0.2,
+      "source": "procedural",
+      "proc": "hold_knife",
+      "events": []
+    },
+    {
+      "name": "upper_grenade_idle",
+      "layer": "upper",
+      "mask": "upper_body",
+      "holdType": "grenade",
+      "loop": true,
+      "duration": 2.0,
+      "blendIn": 0.2,
+      "source": "procedural",
+      "proc": "hold_grenade",
+      "events": []
+    },
+    {
+      "name": "upper_bomb_idle",
+      "layer": "upper",
+      "mask": "upper_body",
+      "holdType": "bomb",
+      "loop": true,
+      "duration": 2.0,
+      "blendIn": 0.2,
+      "source": "procedural",
+      "proc": "hold_bomb",
+      "events": []
+    },
+    {
+      "name": "act_fire",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "additive": true,
+      "duration": 0.16,
+      "blendIn": 0.02,
+      "blendOut": 0.08,
+      "source": "procedural",
+      "proc": "recoil_body",
+      "events": [
+        {
+          "at": 0.0,
+          "event": "fire"
+        }
+      ]
+    },
+    {
+      "name": "act_reload_pistol",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 2.2,
+      "blendIn": 0.12,
+      "source": "procedural",
+      "proc": "reload_pistol",
+      "events": [
+        {
+          "at": 0.35,
+          "event": "mag_out"
+        },
+        {
+          "at": 0.72,
+          "event": "mag_in"
+        }
+      ]
+    },
+    {
+      "name": "act_reload_smg",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 2.4,
+      "blendIn": 0.12,
+      "source": "procedural",
+      "proc": "reload_long",
+      "events": [
+        {
+          "at": 0.32,
+          "event": "mag_out"
+        },
+        {
+          "at": 0.7,
+          "event": "mag_in"
+        }
+      ]
+    },
+    {
+      "name": "act_reload_rifle",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 2.5,
+      "blendIn": 0.12,
+      "source": "procedural",
+      "proc": "reload_long",
+      "events": [
+        {
+          "at": 0.3,
+          "event": "mag_out"
+        },
+        {
+          "at": 0.68,
+          "event": "mag_in"
+        }
+      ]
+    },
+    {
+      "name": "act_reload_shotgun",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 0.55,
+      "blendIn": 0.06,
+      "source": "procedural",
+      "proc": "reload_shell",
+      "events": [
+        {
+          "at": 0.42,
+          "event": "shell_in"
+        }
+      ]
+    },
+    {
+      "name": "act_reload_sniper",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 3.6,
+      "blendIn": 0.12,
+      "source": "procedural",
+      "proc": "reload_long",
+      "events": [
+        {
+          "at": 0.3,
+          "event": "mag_out"
+        },
+        {
+          "at": 0.72,
+          "event": "mag_in"
+        }
+      ]
+    },
+    {
+      "name": "act_draw",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 0.8,
+      "blendIn": 0.05,
+      "source": "procedural",
+      "proc": "draw",
+      "events": [
+        {
+          "at": 0.72,
+          "event": "draw_end"
+        }
+      ]
+    },
+    {
+      "name": "act_holster",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 0.6,
+      "blendIn": 0.05,
+      "source": "procedural",
+      "proc": "holster",
+      "events": [
+        {
+          "at": 0.52,
+          "event": "holster_end"
+        }
+      ]
+    },
+    {
+      "name": "act_throw_weak",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 0.6,
+      "blendIn": 0.08,
+      "source": "procedural",
+      "proc": "throw_weak",
+      "events": [
+        {
+          "at": 0.45,
+          "event": "release"
+        }
+      ]
+    },
+    {
+      "name": "act_throw_strong",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 0.8,
+      "blendIn": 0.08,
+      "source": "procedural",
+      "proc": "throw_strong",
+      "events": [
+        {
+          "at": 0.5,
+          "event": "release"
+        }
+      ]
+    },
+    {
+      "name": "act_plant",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": true,
+      "duration": 3.2,
+      "blendIn": 0.15,
+      "source": "procedural",
+      "proc": "plant",
+      "events": [
+        {
+          "at": 0.98,
+          "event": "plant_done"
+        }
+      ]
+    },
+    {
+      "name": "act_defuse",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": true,
+      "duration": 10.0,
+      "blendIn": 0.15,
+      "source": "procedural",
+      "proc": "defuse",
+      "events": []
+    },
+    {
+      "name": "act_knife_slash",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 0.45,
+      "blendIn": 0.04,
+      "source": "procedural",
+      "proc": "knife_slash",
+      "events": [
+        {
+          "at": 0.3,
+          "event": "slash"
+        }
+      ]
+    },
+    {
+      "name": "act_knife_stab",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 0.65,
+      "blendIn": 0.04,
+      "source": "procedural",
+      "proc": "knife_stab",
+      "events": [
+        {
+          "at": 0.4,
+          "event": "stab"
+        }
+      ]
+    },
+    {
+      "name": "act_hit_head",
+      "layer": "override",
+      "loop": false,
+      "duration": 0.35,
+      "blendIn": 0.03,
+      "source": "procedural",
+      "proc": "hit_head",
+      "events": []
+    },
+    {
+      "name": "act_hit_chest",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 0.35,
+      "blendIn": 0.03,
+      "source": "procedural",
+      "proc": "hit_chest",
+      "events": []
+    },
+    {
+      "name": "act_hit_legs",
+      "layer": "locomotion",
+      "loop": false,
+      "duration": 0.35,
+      "blendIn": 0.03,
+      "source": "procedural",
+      "proc": "hit_legs",
+      "events": []
+    },
+    {
+      "name": "act_death_front",
+      "layer": "override",
+      "loop": false,
+      "duration": 1.4,
+      "blendIn": 0.05,
+      "source": "procedural",
+      "proc": "death_front",
+      "events": [
+        {
+          "at": 0.15,
+          "event": "death_start"
+        }
+      ]
+    },
+    {
+      "name": "act_death_back",
+      "layer": "override",
+      "loop": false,
+      "duration": 1.4,
+      "blendIn": 0.05,
+      "source": "procedural",
+      "proc": "death_back",
+      "events": [
+        {
+          "at": 0.15,
+          "event": "death_start"
+        }
+      ]
+    },
+    {
+      "name": "act_death_left",
+      "layer": "override",
+      "loop": false,
+      "duration": 1.4,
+      "blendIn": 0.05,
+      "source": "procedural",
+      "proc": "death_left",
+      "events": [
+        {
+          "at": 0.15,
+          "event": "death_start"
+        }
+      ]
+    },
+    {
+      "name": "act_death_right",
+      "layer": "override",
+      "loop": false,
+      "duration": 1.4,
+      "blendIn": 0.05,
+      "source": "procedural",
+      "proc": "death_right",
+      "events": [
+        {
+          "at": 0.15,
+          "event": "death_start"
+        }
+      ]
+    },
+    {
+      "name": "act_death_headshot",
+      "layer": "override",
+      "loop": false,
+      "duration": 1.5,
+      "blendIn": 0.03,
+      "source": "procedural",
+      "proc": "death_headshot",
+      "events": [
+        {
+          "at": 0.1,
+          "event": "death_start"
+        }
+      ]
+    },
+    {
+      "name": "act_inspect",
+      "layer": "upper",
+      "mask": "upper_body",
+      "loop": false,
+      "duration": 2.8,
+      "blendIn": 0.2,
+      "blendOut": 0.2,
+      "source": "procedural",
+      "proc": "inspect",
+      "events": [
+        {
+          "at": 1.4,
+          "event": "inspect_turn"
+        }
+      ]
+    }
+  ],
+  "viewmodel": {
+    "rig": "vm_rifle_v1",
+    "maxBones": 40,
+    "bones": [
+      "vm_root",
+      "hand_r",
+      "hand_l",
+      "weapon",
+      "slide",
+      "mag",
+      "hammer",
+      "bolt",
+      "pump",
+      "trigger",
+      "muzzle"
+    ],
+    "clips": [
+      {
+        "name": "vm_draw",
+        "loop": false,
+        "duration": 0.8,
+        "blendIn": 0.04,
+        "proc": "vm_draw",
+        "events": []
+      },
+      {
+        "name": "vm_idle",
+        "loop": true,
+        "duration": 2.4,
+        "proc": "vm_idle",
+        "events": []
+      },
+      {
+        "name": "vm_walk",
+        "loop": true,
+        "duration": 1.0,
+        "proc": "vm_walk",
+        "events": []
+      },
+      {
+        "name": "vm_run",
+        "loop": true,
+        "duration": 0.6,
+        "proc": "vm_run",
+        "events": []
+      },
+      {
+        "name": "vm_jump",
+        "loop": false,
+        "duration": 0.5,
+        "proc": "vm_jump",
+        "events": []
+      },
+      {
+        "name": "vm_land",
+        "loop": false,
+        "duration": 0.35,
+        "proc": "vm_land",
+        "events": []
+      },
+      {
+        "name": "vm_fire_1",
+        "loop": false,
+        "duration": 0.12,
+        "proc": "vm_fire",
+        "events": [
+          {
+            "at": 0.0,
+            "event": "fire"
+          }
+        ]
+      },
+      {
+        "name": "vm_fire_2",
+        "loop": false,
+        "duration": 0.12,
+        "proc": "vm_fire",
+        "events": [
+          {
+            "at": 0.0,
+            "event": "fire"
+          }
+        ]
+      },
+      {
+        "name": "vm_fire_3",
+        "loop": false,
+        "duration": 0.12,
+        "proc": "vm_fire",
+        "events": [
+          {
+            "at": 0.0,
+            "event": "fire"
+          }
+        ]
+      },
+      {
+        "name": "vm_fire_last",
+        "loop": false,
+        "duration": 0.16,
+        "proc": "vm_fire_last",
+        "events": [
+          {
+            "at": 0.0,
+            "event": "fire"
+          },
+          {
+            "at": 0.4,
+            "event": "slide_lock"
+          }
+        ]
+      },
+      {
+        "name": "vm_reload",
+        "loop": false,
+        "duration": 2.5,
+        "proc": "vm_reload",
+        "events": [
+          {
+            "at": 0.28,
+            "event": "mag_out"
+          },
+          {
+            "at": 0.66,
+            "event": "mag_in"
+          },
+          {
+            "at": 0.95,
+            "event": "reload_end"
+          }
+        ]
+      },
+      {
+        "name": "vm_reload_empty",
+        "loop": false,
+        "duration": 3.0,
+        "proc": "vm_reload_empty",
+        "events": [
+          {
+            "at": 0.3,
+            "event": "mag_out"
+          },
+          {
+            "at": 0.72,
+            "event": "mag_in"
+          },
+          {
+            "at": 0.93,
+            "event": "bolt_release"
+          }
+        ]
+      },
+      {
+        "name": "vm_inspect",
+        "loop": false,
+        "duration": 3.0,
+        "proc": "vm_inspect",
+        "events": []
+      },
+      {
+        "name": "vm_holster",
+        "loop": false,
+        "duration": 0.6,
+        "proc": "vm_holster",
+        "events": []
+      },
+      {
+        "name": "vm_knife_slash_l",
+        "loop": false,
+        "duration": 0.45,
+        "proc": "vm_knife_slash",
+        "events": [
+          {
+            "at": 0.3,
+            "event": "slash"
+          }
+        ]
+      },
+      {
+        "name": "vm_knife_slash_r",
+        "loop": false,
+        "duration": 0.45,
+        "proc": "vm_knife_slash",
+        "events": [
+          {
+            "at": 0.3,
+            "event": "slash"
+          }
+        ]
+      },
+      {
+        "name": "vm_knife_stab",
+        "loop": false,
+        "duration": 0.65,
+        "proc": "vm_knife_stab",
+        "events": [
+          {
+            "at": 0.4,
+            "event": "stab"
+          }
+        ]
+      },
+      {
+        "name": "vm_grenade_pin",
+        "loop": false,
+        "duration": 0.4,
+        "proc": "vm_grenade_pin",
+        "events": []
+      },
+      {
+        "name": "vm_throw_strong",
+        "loop": false,
+        "duration": 0.8,
+        "proc": "vm_throw",
+        "events": [
+          {
+            "at": 0.5,
+            "event": "release"
+          }
+        ]
+      },
+      {
+        "name": "vm_throw_weak",
+        "loop": false,
+        "duration": 0.6,
+        "proc": "vm_throw",
+        "events": [
+          {
+            "at": 0.45,
+            "event": "release"
+          }
+        ]
+      },
+      {
+        "name": "vm_plant",
+        "loop": true,
+        "duration": 3.2,
+        "proc": "vm_plant",
+        "events": [
+          {
+            "at": 0.98,
+            "event": "plant_done"
+          }
+        ]
+      },
+      {
+        "name": "vm_defuse",
+        "loop": true,
+        "duration": 10.0,
+        "proc": "vm_defuse",
+        "events": []
+      },
+      {
+        "name": "vm_bolt",
+        "loop": false,
+        "duration": 1.2,
+        "proc": "vm_bolt",
+        "events": [
+          {
+            "at": 0.35,
+            "event": "bolt_back"
+          },
+          {
+            "at": 0.8,
+            "event": "bolt_forward"
+          }
+        ]
+      },
+      {
+        "name": "vm_zoom_in",
+        "loop": false,
+        "duration": 0.2,
+        "proc": "vm_zoom_in",
+        "events": []
+      },
+      {
+        "name": "vm_zoom_out",
+        "loop": false,
+        "duration": 0.2,
+        "proc": "vm_zoom_out",
+        "events": []
+      },
+      {
+        "name": "vm_pump",
+        "loop": false,
+        "duration": 0.7,
+        "proc": "vm_pump",
+        "events": [
+          {
+            "at": 0.4,
+            "event": "pump"
+          }
+        ]
+      },
+      {
+        "name": "vm_shell_insert",
+        "loop": false,
+        "duration": 0.55,
+        "proc": "vm_shell_insert",
+        "events": [
+          {
+            "at": 0.7,
+            "event": "shell_in"
+          }
+        ]
+      },
+      {
+        "name": "vm_slide_lock",
+        "loop": false,
+        "duration": 0.35,
+        "proc": "vm_slide_lock",
+        "events": []
+      }
+    ]
+  },
+  "stateMachine": {
+    "locomotionSpeedThresholds": {
+      "idle": 0.15,
+      "walk": 2.2,
+      "run": 3.2
+    },
+    "crouchSpeedThreshold": 0.15,
+    "interruptRules": {
+      "reloadCanceledBy": [
+        "weapon_switch",
+        "death",
+        "knife",
+        "grenade"
+      ],
+      "reloadResumesAfter": [],
+      "fireBlockedWhile": [
+        "reload",
+        "draw",
+        "holster",
+        "plant",
+        "defuse"
+      ],
+      "sprintCancelsReload": true
+    },
+    "eventsMustFireOnce": true
+  }
+}

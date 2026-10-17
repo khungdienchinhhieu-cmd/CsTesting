@@ -1,0 +1,13 @@
+export const TICK_RATE = 64;
+export const TICK_DT = 1 / TICK_RATE;
+export const SNAPSHOT_RATE = 32;
+export const SNAPSHOT_INTERVAL_TICKS = TICK_RATE / SNAPSHOT_RATE;
+export const MAX_PLAYERS = 10;
+export const MAX_CLIENTS = 12; // 10 đấu + 2 spectator
+export const SERVER_HISTORY_TICKS = TICK_RATE * 2; // 2 giây lịch sử hitbox/pose
+export const INPUT_BUFFER_SIZE = 256;
+export const MAX_LAG_COMP_MS = 200;
+export const INTERP_DELAY_SEC = 2 / TICK_RATE;
+export const INTERP_DELAY_LOSSY_SEC = 4 / TICK_RATE;
+export const BOMB_SITE_COUNT = 2;
+export const RADIO_COOLDOWN_SEC = 2.5;
