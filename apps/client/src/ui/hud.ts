@@ -4,6 +4,9 @@ import type { NetPlayer, NetSnapshot, GameEvent, GameMap } from '@tactical/share
 import type { ClientSettings } from '../game/store';
 
 export interface HudCallbacks {
+  onReplaySpeed?: (speed: number) => void;
+  onReplayToggle?: () => void;
+  onReplayExit?: () => void;
   onBuy: (itemId: string) => void;
   onCloseBuy: () => void;
 }
@@ -62,6 +65,15 @@ export class Hud {
       <div class="objective" id="objective" style="display:none"><span id="objective-text">BOMB</span><div class="bar"><i id="objective-fill"></i></div></div>
       <div class="killfeed" id="killfeed"></div>
       <div class="subtitles" id="subtitles" aria-live="polite"></div>
+      <div class="replay-bar" id="replay-bar" style="display:none">
+        <span class="rb-tag">REPLAY</span>
+        <button data-rspeed="0.5">0.5×</button>
+        <button data-rspeed="1" class="on">1×</button>
+        <button data-rspeed="2">2×</button>
+        <button data-rspeed="4">4×</button>
+        <button data-rtoggle id="rb-toggle">II</button>
+        <button data-rexit>✕</button>
+      </div>
       <div class="radar-wrap"><canvas id="radar"></canvas><div class="radar-label">TACTICAL</div></div>
       <div class="vitals">
         <div class="vital" id="vital-hp"><span class="icon">HP</span><span class="num" id="hp-num">100</span><div class="bar"><i id="hp-bar"></i></div></div>
@@ -127,6 +139,27 @@ export class Hud {
   setMap(map: GameMap): void { this.map = map; }
 
   setVisible(v: boolean): void { this.root.classList.toggle('active', v); }
+
+  showReplayBar(show: boolean): void {
+    const bar = this.root.querySelector('#replay-bar') as HTMLElement | null;
+    if (!bar) return;
+    bar.style.display = show ? 'flex' : 'none';
+    if (!show) return;
+    bar.querySelectorAll<HTMLButtonElement>('[data-rspeed]').forEach((b) => {
+      b.onclick = () => {
+        const speed = Number(b.dataset.rspeed);
+        bar.querySelectorAll('[data-rspeed]').forEach((x) => x.classList.toggle('on', x === b));
+        this.cb.onReplaySpeed?.(speed);
+      };
+    });
+    (bar.querySelector('[data-rtoggle]') as HTMLButtonElement | null)?.addEventListener('click', () => this.cb.onReplayToggle?.());
+    (bar.querySelector('[data-rexit]') as HTMLButtonElement | null)?.addEventListener('click', () => this.cb.onReplayExit?.());
+  }
+
+  setReplayPaused(paused: boolean): void {
+    const btn = this.root.querySelector('#rb-toggle');
+    if (btn) btn.textContent = paused ? '▶' : 'II';
+  }
 
   applySettings(s: ClientSettings): void {
     this.settings = s;

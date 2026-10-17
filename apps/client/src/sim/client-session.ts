@@ -33,5 +33,6 @@ export interface ClientSession {
   chat(text: string, teamOnly?: boolean): void;
   pause(): void;
   resume(): void;
+  setSpeed?(speed: number): void;
   destroy(): void;
 }

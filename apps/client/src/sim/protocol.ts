@@ -39,6 +39,7 @@ export type WorkerIn =
   | { type: 'chat'; text: string }
   | { type: 'pause' }
   | { type: 'resume' }
+  | { type: 'speed'; speed: number }
   | { type: 'quit' };
 
 export type WorkerOut =

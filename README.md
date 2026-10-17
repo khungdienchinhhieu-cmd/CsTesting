@@ -26,6 +26,8 @@ Yêu cầu: Node.js >= 22.12, pnpm 10.x. Không cần GPU rời; preset `competi
 | B (giữ trong vùng mua) | mở menu mua |
 | TAB | bảng điểm |
 | Sau trận | replay tự lưu (tối đa 3 trận) — xem ở menu **Xem lại trận** |
+| Trong replay | nút 0.5×/1×/2×/4×, tạm dừng, thoát; xuất/nhập JSON ở menu replay |
+| `?lookdev=1` | trang chẩn đoán renderer (backend, GPU, FPS, preset, asset placeholder) |
 | Y / U | chat đội / chat chung |
 | K | radio |
 | ESC | pause / nhả chuột |
@@ -80,7 +82,7 @@ Lưu ý: **chưa kiểm chứng UI online trong Chromium** trong môi trường 
 
 ## Trạng thái trung thực
 
-Bản dựng hiện tại: **47 test / 15 file PASS**, lint/typecheck 0 lỗi, build client PASS. Replay tất định đã được kiểm bằng test (600 tick trùng khớp trạng thái). **Mỹ thuật vẫn là placeholder thủ tục** — cổng phát hành sẽ chặn cho tới khi thay asset thật (xem `docs/ASSET_BRIEF.md`, `PROGRESS.md`). WebGPU/WebGL2 chưa được kiểm bằng trình duyệt thật trong môi trường build này (không có Chromium/GPU); mọi tuyên bố hình ảnh cần tự kiểm tra trên máy bạn. PostgreSQL/Redis và `docker compose` chưa chạy thật trong sandbox — SQL mới được review/typecheck.
+Bản dựng hiện tại: **50 test / 16 file PASS**, lint/typecheck 0 lỗi, build client PASS. UI có tiếng Việt/English, phím tắt tùy biến và thanh replay. Replay tất định đã được kiểm bằng test (600 tick trùng khớp trạng thái). **Mỹ thuật vẫn là placeholder thủ tục** — cổng phát hành sẽ chặn cho tới khi thay asset thật (xem `docs/ASSET_BRIEF.md`, `PROGRESS.md`). WebGPU/WebGL2 chưa được kiểm bằng trình duyệt thật trong môi trường build này (không có Chromium/GPU); mọi tuyên bố hình ảnh cần tự kiểm tra trên máy bạn. PostgreSQL/Redis và `docker compose` chưa chạy thật trong sandbox — SQL mới được review/typecheck.
 
 ## Pháp lý & feature flag
 

@@ -18,6 +18,7 @@ import type { AudioSystem } from '../audio/audio';
 import type { Hud } from '../ui/hud';
 import type { Menus } from '../ui/menus';
 import type { SkinDef } from '../render/skins';
+import { t } from '../i18n';
 
 interface HistoryEntry { tick: number; snap: NetSnapshot }
 
@@ -65,6 +66,8 @@ export class GameView {
   private spectateId: number | null = null;
   private cameraShake = 0;
   private lastCaptionAt = 0;
+  private replayPaused = false;
+  private replaySpeed = 1;
   private landingVelocity = 0;
   private footstepTimer = 0;
   private lastSelfHealth = 100;
@@ -94,7 +97,7 @@ export class GameView {
     session.onSnapshot = (snap) => this.onSnapshot(snap);
     session.onError = (msg) => { this.menus.toast(msg, true); this.cb.onExit(); };
     session.onBuyResult = (ok, _id, reason) => {
-      this.hud.setBuyMessage(ok ? 'ĐÃ MUA' : (reason === 'money' ? 'KHÔNG ĐỦ TIỀN' : reason === 'phase' ? 'NGOÀI THỜI GIAN MUA' : 'KHÔNG THỂ MUA'), !ok);
+      this.hud.setBuyMessage(t(ok ? 'ĐÃ MUA' : (reason === 'money' ? 'KHÔNG ĐỦ TIỀN' : reason === 'phase' ? 'NGOÀI THỜI GIAN MUA' : 'KHÔNG THỂ MUA')), !ok);
     };
     session.onMatchEnd = (winner) => this.finishMatch(winner);
     session.onChat = (from, text, team, bot) => {
@@ -107,8 +110,8 @@ export class GameView {
       this.applyRoster(info.roster);
     };
     session.onState = (state, detail) => {
-      if (state === 'reconnecting') this.menus.toast(`Mất kết nối — đang thử lại. ${detail ?? ''}`, true);
-      else if (state === 'open' && this.running) this.menus.toast('Đã kết nối lại máy chủ.', false);
+      if (state === 'reconnecting') this.menus.toast(`${t('Mất kết nối — đang thử lại.')} ${detail ?? ''}`, true);
+      else if (state === 'open' && this.running) this.menus.toast(t('Đã kết nối lại máy chủ.'), false);
     };
   }
 
@@ -142,14 +145,19 @@ export class GameView {
     this.hud.setVisible(true);
     this.hud.resetMatch();
     this.menus.gameActive = true;
-    this.hud.showBanner(options.replay ? 'REPLAY' : 'TRIỂN KHAI', options.replay ? 'PHÁT LẠI TRẬN ĐẤU · KHÔNG NHẬN INPUT' : 'CHUẨN BỊ VÀO TRẬN', 1600);
-    if (options.replay) this.hud.chat('Chế độ xem lại: mô phỏng chạy lại từ seed và input đã ghi.', 'sys');
+    const isReplay = options.replay !== undefined;
+    this.replayPaused = false;
+    this.replaySpeed = 1;
+    this.hud.showReplayBar(isReplay);
+    this.hud.setReplayPaused(false);
+    this.hud.showBanner(t(isReplay ? 'REPLAY' : 'TRIỂN KHAI'), t(isReplay ? 'PHÁT LẠI TRẬN ĐẤU · KHÔNG NHẬN INPUT' : 'CHUẨN BỊ VÀO TRẬN'), 1600);
+    if (isReplay) this.hud.chat(t('Chế độ xem lại: mô phỏng chạy lại từ seed và input đã ghi.'), 'sys');
     const ready = await this.session.start(options, (buf) => decodeSnapshot(new Uint8Array(buf), null, this.catalog!));
     this.youId = ready.youId;
     this.roster = ready.roster;
     this.hud.setRoster(this.roster);
-    this.hud.chat(`Trận đấu ${options.mode.toUpperCase()} · ${this.map.json.name} · ${options.botsPerSide}v${options.botsPerSide}`, 'sys');
-    this.hud.chat('Bot được gắn nhãn BOT. Nhấn TAB để xem bảng điểm, B để mua.', 'sys');
+    this.hud.chat(`${t('Trận đấu')} ${options.mode.toUpperCase()} · ${this.map.json.name} · ${options.botsPerSide}v${options.botsPerSide}`, 'sys');
+    this.hud.chat(t('Bot được gắn nhãn BOT. Nhấn TAB để xem bảng điểm, B để mua.'), 'sys');
     this.matchFinished = false;
     this.running = true;
     this.lastFrame = performance.now();
@@ -399,12 +407,12 @@ export class GameView {
         break;
       case 'bomb_planted':
         this.audio.play('bomb_planted');
-        this.hud.showBanner('BOMB ĐÃ ĐẶT', `SITE ${e.site} · 40 GIÂY`, 2000);
-        this.hud.chat(`Bomb được đặt tại site ${e.site}`, 'sys');
+        this.hud.showBanner(t('BOMB ĐÃ ĐẶT'), `SITE ${e.site} · 40 ${t('GIÂY')}`, 2000);
+        this.hud.chat(`${t('Bomb được đặt tại site')} ${e.site}`, 'sys');
         break;
       case 'bomb_defused':
         this.audio.play('bomb_defused');
-        this.hud.showBanner('BOMB ĐÃ GỠ', 'CT GIÀNH CHIẾN THẮNG VÒNG', 2000);
+        this.hud.showBanner(t('BOMB ĐÃ GỠ'), t('CT GIÀNH CHIẾN THẮNG VÒNG'), 2000);
         break;
       case 'bomb_exploded':
         this.effects?.explosion(e.x, e.y, e.z, true);
@@ -426,11 +434,11 @@ export class GameView {
         this.audio.play('grenade_throw', { pos: { x: 0, y: 0, z: 0 }, volume: 0.3 });
         break;
       case 'round_start':
-        this.hud.chat(`Vòng ${e.round} bắt đầu`, 'sys');
+        this.hud.chat(`${t('Vòng')} ${e.round} ${t('bắt đầu')}`, 'sys');
         break;
       case 'round_end':
         this.audio.play(e.winner === this.selfTeam ? 'round_win' : 'round_lose');
-        this.hud.showBanner(e.winner === this.selfTeam ? 'VÒNG THẮNG' : 'VÒNG THUA', `${e.reason.toUpperCase()} · ${e.scoreT}:${e.scoreCT}`, 2400);
+        this.hud.showBanner(t(e.winner === this.selfTeam ? 'VÒNG THẮNG' : 'VÒNG THUA'), `${e.reason.toUpperCase()} · ${e.scoreT}:${e.scoreCT}`, 2400);
         break;
       case 'match_end':
         this.finishMatch(e.winner);
@@ -447,10 +455,10 @@ export class GameView {
         this.audio.play('reload_start');
         break;
       case 'pickup':
-        if (e.playerId === selfId) this.hud.chat(`Đã nhặt ${wname(e.itemId)}`, 'sys');
+        if (e.playerId === selfId) this.hud.chat(`${t('Đã nhặt')} ${wname(e.itemId)}`, 'sys');
         break;
       case 'buy':
-        if (e.playerId === selfId) this.hud.chat(`Đã mua ${wname(e.itemId)}`, 'sys');
+        if (e.playerId === selfId) this.hud.chat(`${t('Đã mua')} ${wname(e.itemId)}`, 'sys');
         break;
       default:
         break;
@@ -510,6 +518,21 @@ export class GameView {
     const deg = (rel * 180) / Math.PI;
     const dir = Math.abs(deg) < 45 ? 'phía trước' : Math.abs(deg) > 135 ? 'phía sau' : deg > 0 ? 'bên phải' : 'bên trái';
     this.hud.caption(`${label} · ${dir} · ${Math.round(dist)}m`);
+  }
+
+  setReplaySpeed(speed: number): void {
+    if (!this.options?.replay) return;
+    this.replaySpeed = speed;
+    this.session.setSpeed?.(speed);
+    this.hud.chat(`Replay ${speed}×`, 'sys');
+  }
+
+  toggleReplayPause(): void {
+    if (!this.options?.replay) return;
+    this.replayPaused = !this.replayPaused;
+    if (this.replayPaused) this.session.pause();
+    else this.session.resume();
+    this.hud.setReplayPaused(this.replayPaused);
   }
 
   private applyRoster(roster: RosterEntry[]): void {
@@ -676,6 +699,7 @@ export class GameView {
 
   dispose(): void {
     this.disposed = true;
+    this.hud.showReplayBar(false);
     window.removeEventListener('keydown', this.buyKeys);
     window.clearTimeout(this.matchEndTimer);
     this.disposeWorld();

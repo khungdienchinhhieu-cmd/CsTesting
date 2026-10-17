@@ -52,17 +52,17 @@ Cập nhật: 2026-10-17 · nhánh `arena/13bff6a5-cstesting`
 | M18 | ✅ (SQL chưa chạy) | Sổ cái ghi kép, chợ, fee, idempotency, audit; 6 test domain + race pass. |
 | M19 | ✅ (chưa kiểm trình duyệt) | `OnlineSession` (WS, snapshot nhị phân, ping, tự kết nối lại), menu online, proxy Vite; test tích hợp client↔server PASS. |
 | M20 | ✅ (một phần) | Replay tất định (seed + input, test trùng khớp trạng thái), lưu 3 trận gần nhất trong localStorage, phát lại bằng worker; spectator trực tiếp. `loadtest` viết nhưng **chưa chạy**. |
-| M21 | ⚠️ một phần | Đã có trợ năng (phụ đề âm thanh, 4 bảng màu, tương phản cao, giảm chuyển động, cỡ HUD), pipeline GitHub Pages, `loadtest` đã chạy; **chưa i18n, chưa kiểm browser thật**. |
+| M21 | ✅ (chưa kiểm browser) | Trợ năng đầy đủ (phụ đề, 4 bảng màu, tương phản, giảm chuyển động, cỡ HUD), i18n vi/en, đổi phím, trang chẩn đoán look-dev, Pages workflow, `loadtest`; **chưa kiểm bằng Chromium/GPU thật**. |
 
 ## Kết quả đo (sandbox, không GPU)
 
 - `pnpm lint`: ĐẠT.
 - `pnpm typecheck`: ĐẠT toàn bộ 6 package.
-- `pnpm test`: **47 test / 15 file ĐẠT** (shared, replay codec + tất định, bots, gameserver WS, client online session, API HTTP, ledger/market race).
+- `pnpm test`: **50 test / 16 file ĐẠT** (shared, replay codec + tất định, bots, gameserver WS, client online session, i18n, API HTTP, ledger/market race).
 - `pnpm bench:sim` (10 bot pro): trung bình **0.253 ms/tick**, p95 0.465 ms, p99 3.46 ms; ngân sách 15.625 ms → dùng 1.6%.
 - `pnpm netsim` (loss 2%): **~65 kbps**, 260 B/snapshot, encode+decode p99 ~1.05 ms, 0 lỗi giải mã.
 - `pnpm loadtest` (gameserver `/healthz`): **2.000 request / 25 luồng → 1.823 RPS, 0 lỗi, p50 9.6 ms, p95 28.6 ms, p99 58.8 ms, max 68.9 ms** (CPU sandbox).
-- `pnpm --filter @tactical/client build`: JS 1,103.60 kB (308.49 kB gzip) + worker 144.97 kB, CSS 26.84 kB.
+- `pnpm --filter @tactical/client build`: JS 1,128.83 kB (317.61 kB gzip) + worker 145.08 kB, CSS 30.20 kB.
 - `pnpm release:check`: **THẤT BẠI có chủ đích** — 10 asset placeholder. Dùng `pnpm release:check:dev` cho CI/phát triển.
 
 ## Vấn đề đang mở (ưu tiên giảm dần)
@@ -79,7 +79,9 @@ Cập nhật: 2026-10-17 · nhánh `arena/13bff6a5-cstesting`
 
 ## Bước tiếp theo
 
-1. M21 còn lại: i18n đầy đủ (hiện chỉ tiếng Việt), kiểm browser thật trên máy có GPU, tinh chỉnh trợ năng theo phản hồi người dùng.
+1. Kiểm browser thật trên máy có GPU (dùng `?lookdev=1` để lấy báo cáo backend/FPS/GPU).
+2. Rà chuỗi tiếng Việt còn lại trong thông báo động (đã phủ menu/HUD chính; xem "Vấn đề mở" của M21).
+3. Art/audio pass theo ASSET_BRIEF; thay placeholder rồi mới bật cổng phát hành nghiêm ngặt.
 2. Replay nâng cao: tua/đổi tốc độ, xuất/nhập tệp, free-cam; spectator tự do.
 3. Tinh chỉnh bot + test telemetry dài (plant/defuse, economy, comms); bot hiện thắng cách biệt phe T trong sim dài.
 4. Chạy `docker compose up` trên máy có Docker; kiểm migration/sổ cái/chợ thật; thêm test tích hợp Postgres.
@@ -169,3 +171,33 @@ pnpm loadtest --url=http://127.0.0.1:8443/healthz --n=2000 --c=25
 **Vấn đề mở**: i18n chưa làm (UI chỉ tiếng Việt); cỡ HUD dùng CSS `zoom` chưa kiểm trên Firefox/Safari; chưa kiểm trợ năng bằng trình đọc màn hình thật; WebGPU/WebGL2 vẫn chưa chạy trong Chromium của sandbox.
 
 **Bước tiếp**: i18n vi/en, kiểm browser thật + trợ năng, rồi art/audio pass.
+
+## Báo cáo M21 — i18n, phím tắt, look-dev, replay nâng cao
+
+**Tệp chính**
+- `apps/client/src/i18n.ts` — từ điển VI→EN theo câu gốc, `t()`, `setLang()`, `localizeDom()` (dịch text node + placeholder/title/aria-label); test `tests/client/i18n.test.ts`.
+- `apps/client/src/ui/menus.ts` — chọn ngôn ngữ (lưu, tải lại trang), thẻ **PHÍM TẮT** cho 22 hành động (bắt phím/chuột, phát hiện trùng, đặt lại mặc định), dịch DOM sau mỗi lần render động.
+- `apps/client/src/main.ts` — áp `lang`, trợ năng và mở trang chẩn đoán bằng `?lookdev=1` hoặc nút trong Giới thiệu.
+- `apps/client/src/ui/lookdev-page.ts` — bảng backend/GPU/FPS/frame, đổi 5 preset, ép WebGL2, sao chép báo cáo JSON, danh sách 10 asset kèm cờ placeholder, checklist kiểm bằng mắt.
+- `apps/client/src/ui/hud.ts` + `style.css` — thanh replay (0.5×/1×/2×/4×, tạm dừng, thoát), phụ đề, kiểu phím tắt.
+- `apps/client/src/sim/worker.ts` + `protocol.ts` + `session.ts` — tua nhanh replay bằng hệ số tích luỹ tick, giới hạn bước để không spiral.
+- `apps/client/src/ui/menus.ts` + `game/replay-store.ts` — xuất/nhập replay JSON (≤ 2 MB mỗi bản).
+
+**Cách chạy**
+```bash
+pnpm dev:client                  # Cài đặt → Ngôn ngữ / Phím tắt; Giới thiệu → Chẩn đoán renderer
+# hoặc mở trực tiếp: http://localhost:5173/?lookdev=1
+# ép WebGL2:        http://localhost:5173/?lookdev=1&webgl=1
+```
+
+**Cổng**: lint/typecheck 0 lỗi · **50 test / 16 file PASS** · client build PASS · validate 3 bộ PASS · `release:check:dev` PASS (strict vẫn chặn 10 placeholder).
+
+**Bảo mật**: không có secret ở client; replay nhập từ ngoài được `decodeReplay` kiểm phiên bản/độ dài/kiểu; không eval; phím tắt chỉ lưu localStorage.
+
+**Vấn đề mở**
+- **Chưa kiểm trong Chromium/GPU thật** — trang look-dev được tạo để người dùng tự xác minh và gửi báo cáo.
+- i18n phủ menu, cài đặt, HUD, banner chính; một số thông báo động và tên nội dung vẫn tiếng Việt.
+- Cỡ HUD dùng CSS `zoom` (chưa kiểm Firefox/Safari); chưa kiểm bằng trình đọc màn hình.
+- Replay chưa có free-cam; spectator online chưa tự do chuyển góc.
+
+**Bước tiếp**: kiểm trình duyệt thật + gửi báo cáo look-dev; art/audio pass; cập nhật tài liệu phát hành.

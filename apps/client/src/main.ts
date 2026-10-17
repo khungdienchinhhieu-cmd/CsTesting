@@ -14,6 +14,8 @@ import { GameView } from './game/gameview';
 import { Menus } from './ui/menus';
 import { Hud } from './ui/hud';
 import { ReplayStore } from './game/replay-store';
+import { setLang } from './i18n';
+import { mountLookdev } from './ui/lookdev-page';
 import { decodeReplay } from '@tactical/shared';
 
 const boot = document.getElementById('boot-screen') as HTMLElement;
@@ -32,6 +34,7 @@ async function main(): Promise<void> {
   const bundle: DataBundle = loadData();
   const assets = new AssetLoader();
   const settings = new SettingsStore(bundle.settings as unknown as ClientSettings);
+  setLang(settings.value.gameplay.language === 'en' ? 'en' : 'vi');
   const profile = new ProfileStore('Operator');
   const replayStore = new ReplayStore();
   const audio = new AudioSystem();
@@ -53,6 +56,9 @@ async function main(): Promise<void> {
   const hud = new Hud(uiRoot, bundle, settings.value, hudMap, {
     onBuy: (id) => gameView?.buy(id),
     onCloseBuy: () => gameView?.closeBuy(),
+    onReplaySpeed: (speed) => gameView?.setReplaySpeed(speed),
+    onReplayToggle: () => gameView?.toggleReplayPause(),
+    onReplayExit: () => gameView?.quit(),
   });
   const menus = new Menus(uiRoot, bundle, settings, profile, replayStore, {
     onStart: (opts) => beginMatch(session, opts),
@@ -86,6 +92,12 @@ async function main(): Promise<void> {
 
   let gameView: GameView | null = null;
   let onlineSession: OnlineSession | null = null;
+  let disposeLookdev: (() => void) | null = null;
+  const openLookdev = (): void => {
+    if (disposeLookdev) return;
+    disposeLookdev = mountLookdev({ root: uiRoot, host, settings, info, onClose: () => { disposeLookdev?.(); disposeLookdev = null; } });
+  };
+  if (new URLSearchParams(location.search).get('lookdev') === '1') openLookdev();
   let lookdev: MapVisual | null = null;
   let lookdevAngle = 0.4;
   let menuRaf = 0;
@@ -94,6 +106,7 @@ async function main(): Promise<void> {
     const s = settings.value;
     settings.save();
     document.body.dataset.colorBlind = s.accessibility.colorBlind;
+    setLang(s.gameplay.language === 'en' ? 'en' : 'vi');
     document.body.dataset.highContrast = String(s.accessibility.highContrast);
     document.body.dataset.reducedMotion = String(s.gameplay.reducedMotion);
     host.applyPreset(s.graphics.preset);
@@ -162,6 +175,7 @@ async function main(): Promise<void> {
   }
 
   function beginMatch(active: ClientSession, opts: Parameters<GameView['start']>[0]): void {
+    if (disposeLookdev) { disposeLookdev(); disposeLookdev = null; }
     document.body.dataset.screen = 'game';
     cancelAnimationFrame(menuRaf);
     if (lookdev) { host.scene.remove(lookdev.group); lookdev.dispose(); lookdev = null; }

@@ -58,6 +58,7 @@ export class OfflineSession implements ClientSession {
   }
 
   pause(): void { this.worker?.postMessage({ type: 'pause' } satisfies WorkerIn); }
+  setSpeed(speed: number): void { this.worker?.postMessage({ type: 'speed', speed } satisfies WorkerIn); }
   resume(): void { this.worker?.postMessage({ type: 'resume' } satisfies WorkerIn); }
   chat(text: string, _teamOnly = false): void { this.worker?.postMessage({ type: 'chat', text } satisfies WorkerIn); }
 

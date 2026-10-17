@@ -5,6 +5,7 @@ import type { SkinDef, SkinInstance } from '../render/skins';
 import type { GameMap, Team } from '@tactical/shared';
 import { resolveOnlineUrl } from '../sim/online';
 import type { ReplayStore, SavedReplay } from '../game/replay-store';
+import { localizeDom, t } from '../i18n';
 
 export interface MenuCallbacks {
   onStart: (options: OfflineOptions) => void;
@@ -111,6 +112,7 @@ export class Menus {
     el.innerHTML = html;
     this.screenHost.appendChild(el);
     this.elements[id] = el;
+    localizeDom(el);
     return el;
   }
 
@@ -244,6 +246,14 @@ export class Menus {
         </div>
       </div>`);
     el.querySelector('[data-act="back"]')?.addEventListener('click', () => this.show('main'));
+    const file = el.querySelector<HTMLInputElement>('#replay-file');
+    el.querySelector('#replay-import')?.addEventListener('click', () => file?.click());
+    file?.addEventListener('change', () => {
+      const f = file.files?.[0];
+      if (!f) return;
+      void f.text().then((text) => { this.cb.onWatchReplay(text); }).catch(() => this.toast('Không đọc được tệp replay', true));
+      file.value = '';
+    });
     el.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach((b) => b.addEventListener('click', () => {
       this.setupState.mode = b.dataset.mode as GameMode;
       if (this.setupState.mode === 'range') this.setupState.mapId = 'range';
@@ -364,6 +374,14 @@ export class Menus {
         </div>
       </div>`);
     el.querySelector('[data-act="back"]')?.addEventListener('click', () => this.show('main'));
+    const file = el.querySelector<HTMLInputElement>('#replay-file');
+    el.querySelector('#replay-import')?.addEventListener('click', () => file?.click());
+    file?.addEventListener('change', () => {
+      const f = file.files?.[0];
+      if (!f) return;
+      void f.text().then((text) => { this.cb.onWatchReplay(text); }).catch(() => this.toast('Không đọc được tệp replay', true));
+      file.value = '';
+    });
     el.querySelectorAll<HTMLButtonElement>('[data-omode]').forEach((b) => b.addEventListener('click', () => {
       this.onlineState.mode = b.dataset.omode as OnlineState['mode'];
       el.querySelectorAll('[data-omode]').forEach((x) => x.classList.toggle('on', x === b));
@@ -415,11 +433,23 @@ export class Menus {
       <div class="subpage">
         <div class="subpage-head">
           <div><h1>Xem lại trận</h1><p style="margin:4px 0 0;color:var(--muted);font-size:12px">Replay lưu seed + input, phát lại bằng cùng mô phỏng 64 Hz — tất định với bot.</p></div>
-          <button class="btn ghost" data-act="back">← Quay lại</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn ghost" id="replay-import">Nhập tệp</button>
+            <input type="file" id="replay-file" accept="application/json,.json" style="display:none" />
+            <button class="btn ghost" data-act="back">← Quay lại</button>
+          </div>
         </div>
         <div class="subpage-body"><div id="replay-list" class="panel" style="padding:16px;display:flex;flex-direction:column;gap:10px"></div></div>
       </div>`);
     el.querySelector('[data-act="back"]')?.addEventListener('click', () => this.show('main'));
+    const file = el.querySelector<HTMLInputElement>('#replay-file');
+    el.querySelector('#replay-import')?.addEventListener('click', () => file?.click());
+    file?.addEventListener('change', () => {
+      const f = file.files?.[0];
+      if (!f) return;
+      void f.text().then((text) => { this.cb.onWatchReplay(text); }).catch(() => this.toast('Không đọc được tệp replay', true));
+      file.value = '';
+    });
   }
 
   private renderReplays(): void {
@@ -439,9 +469,11 @@ export class Menus {
       return `<div style="display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:8px 0">
         <div style="flex:1"><b style="font-size:12px">${esc(label)} · ${r.mode.toUpperCase()}</b><div style="color:var(--muted);font-size:11px">${esc(date)} · ${kb} KB</div></div>
         <button class="btn gold" data-watch="${r.id}">Xem</button>
+        <button class="btn ghost" data-export="${r.id}">Xuất</button>
         <button class="btn ghost" data-del="${r.id}">Xóa</button>
       </div>`;
     }).join('');
+    localizeDom(host);
     host.querySelectorAll<HTMLButtonElement>('[data-watch]').forEach((b) => b.addEventListener('click', () => {
       const item = items.find((x) => x.id === b.dataset.watch);
       if (item) this.cb.onWatchReplay(item.data);
@@ -449,6 +481,20 @@ export class Menus {
     host.querySelectorAll<HTMLButtonElement>('[data-del]').forEach((b) => b.addEventListener('click', () => {
       this.replayStore.remove(b.dataset.del!);
       this.renderReplays();
+    }));
+    host.querySelectorAll<HTMLButtonElement>('[data-export]').forEach((b) => b.addEventListener('click', () => {
+      const item = items.find((x) => x.id === b.dataset.export);
+      if (!item) return;
+      const blob = new Blob([item.data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `tactical-strike-${item.mapId}-${item.savedAt}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1500);
+      this.toast('Đã xuất tệp replay.');
     }));
   }
 
@@ -478,6 +524,7 @@ export class Menus {
     if (tier) tier.textContent = TIERS.find((t) => t.id === this.setupState.tier)?.label ?? 'Regular';
     const summary = el.querySelector('#setup-summary');
     if (summary) summary.innerHTML = `MAP <b style="color:var(--accent-2)">${esc(map.json.name)}</b> · ${this.setupState.mode.toUpperCase()} · ${this.setupState.botsPerSide}v${this.setupState.botsPerSide} · BOT ${this.setupState.tier.toUpperCase()}<br/>${esc(map.json.description ?? '')}`;
+    localizeDom(el);
   }
 
   private buildArmory(): void {
@@ -490,6 +537,14 @@ export class Menus {
         <div class="subpage-body"><div class="armory-grid" id="armory-grid"></div></div>
       </div>`);
     el.querySelector('[data-act="back"]')?.addEventListener('click', () => this.show('main'));
+    const file = el.querySelector<HTMLInputElement>('#replay-file');
+    el.querySelector('#replay-import')?.addEventListener('click', () => file?.click());
+    file?.addEventListener('change', () => {
+      const f = file.files?.[0];
+      if (!f) return;
+      void f.text().then((text) => { this.cb.onWatchReplay(text); }).catch(() => this.toast('Không đọc được tệp replay', true));
+      file.value = '';
+    });
     this.buildArmoryGrid();
   }
 
@@ -575,7 +630,13 @@ export class Menus {
             <div class="setting"><label>Phụ đề âm thanh</label><select id="set-subtitles"><option value="0" ${!s.accessibility.subtitles ? 'selected' : ''}>Tắt</option><option value="1" ${s.accessibility.subtitles ? 'selected' : ''}>Bật</option></select><span></span></div>
             <div class="setting"><label>Tương phản cao</label><select id="set-contrast"><option value="0" ${!s.accessibility.highContrast ? 'selected' : ''}>Tắt</option><option value="1" ${s.accessibility.highContrast ? 'selected' : ''}>Bật</option></select><span></span></div>
             <div class="setting"><label>Cỡ HUD</label><input id="set-hudscale" type="range" min="0.85" max="1.25" step="0.05" value="${s.accessibility.uiScale}" /><span class="val" id="v-hudscale">${Math.round(s.accessibility.uiScale * 100)}%</span></div>
-            <div class="setting" style="grid-template-columns:1fr"><label style="color:var(--muted);font-size:11px">Phụ đề mô tả tiếng súng/bước chân theo hướng tương đối. Preset đồ hoạ không ảnh hưởng các trợ năng này.</label></div>
+            <div class="setting"><label>Ngôn ngữ</label><select id="set-lang"><option value="vi" ${s.gameplay.language !== 'en' ? 'selected' : ''}>Tiếng Việt</option><option value="en" ${s.gameplay.language === 'en' ? 'selected' : ''}>English</option></select><span></span></div>
+            <div class="setting" style="grid-template-columns:1fr"><label style="color:var(--muted);font-size:11px">Đổi ngôn ngữ sẽ tải lại trang. Phụ đề mô tả tiếng súng/bước chân theo hướng tương đối; preset đồ hoạ không ảnh hưởng các trợ năng này.</label></div>
+          </div>
+          <div class="panel settings-card"><h3>// PHÍM TẮT</h3>
+            <div class="keybind-list" id="keybind-list"></div>
+            <div class="row" style="display:flex;gap:8px;margin-top:10px"><button class="btn ghost" id="reset-keys">Đặt lại phím</button></div>
+            <div class="setting" style="grid-template-columns:1fr;margin-top:6px"><label style="color:var(--muted);font-size:11px">Bấm vào phím để đổi. Chuột phải/giữa được nhận cho ngắm và bắn. Esc để hủy.</label></div>
           </div>
           <div class="panel settings-card"><h3>// DỮ LIỆU</h3>
             <p style="color:var(--muted);font-size:12px;line-height:1.6">Hồ sơ cục bộ: <b>${esc(this.profile.value.name)}</b><br/>Credits: <b>${fmt(this.profile.value.credits)}</b><br/>Skin sở hữu: <b>${this.profile.value.ownedSkins.length}</b></p>
@@ -608,6 +669,85 @@ export class Menus {
       el.querySelectorAll('[data-preset]').forEach((x) => x.classList.toggle('on', x === b));
       this.cb.onSettingsChanged();
     }));
+    // ==== phím tắt ====
+    const binds: [string, string][] = [
+      ['forward', 'Tiến'], ['back', 'Lùi'], ['left', 'Trái'], ['right', 'Phải'],
+      ['jump', 'Nhảy'], ['crouch', 'Ngồi'], ['walk', 'Đi chậm'], ['use', 'Tương tác'],
+      ['reload', 'Nạp đạn'], ['drop', 'Bỏ vũ khí'], ['inspect', 'Xem vũ khí'],
+      ['slotPrimary', 'Súng chính'], ['slotSecondary', 'Súng phụ'], ['slotKnife', 'Dao'], ['slotGrenade', 'Lựu đạn'],
+      ['scope', 'Ngắm'], ['buyMenu', 'Menu mua'], ['scoreboard', 'Bảng điểm'],
+      ['teamChat', 'Chat đội'], ['allChat', 'Chat chung'], ['radio', 'Radio'], ['debugOverlay', 'Debug'],
+    ];
+    const fmtKey = (code: string | undefined): string => {
+      if (!code) return '—';
+      if (code.startsWith('Key')) return code.slice(3);
+      if (code.startsWith('Digit')) return code.slice(5);
+      if (code.startsWith('Mouse')) return `MOUSE${Number(code.slice(5)) + 1}`;
+      const named: Record<string, string> = { ControlLeft: 'CTRL', ShiftLeft: 'SHIFT', Space: 'SPACE', Tab: 'TAB', Backquote: '`', Escape: 'ESC', ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→' };
+      return named[code] ?? code.toUpperCase();
+    };
+    let pendingBind: string | null = null;
+    const list = el.querySelector('#keybind-list');
+    const renderBinds = (): void => {
+      if (!list) return;
+      list.innerHTML = binds.map(([action, label]) => {
+        const value = pendingBind === action ? 'Nhấn phím mới… (Esc để hủy)' : fmtKey(this.settings.value.keybinds[action]);
+        return `<div class="kb-row"><span>${esc(label)}</span><button class="kb-btn ${pendingBind === action ? 'waiting' : ''}" data-bind="${action}">${esc(value)}</button></div>`;
+      }).join('');
+      localizeDom(list);
+      list.querySelectorAll<HTMLButtonElement>('[data-bind]').forEach((b) => b.addEventListener('click', () => {
+        pendingBind = b.dataset.bind ?? null;
+        renderBinds();
+      }));
+    };
+    const assignBind = (action: string, code: string): void => {
+      const keybinds = this.settings.value.keybinds;
+      let conflict = false;
+      for (const [k, v] of Object.entries(keybinds)) {
+        if (v === code && k !== action) { keybinds[k] = ''; conflict = true; }
+      }
+      keybinds[action] = code;
+      this.settings.save();
+      this.cb.onSettingsChanged();
+      this.toast(conflict ? 'Trùng phím — đã gỡ phím cũ.' : 'Đã đổi phím.', conflict);
+    };
+    const captureKey = (ev: KeyboardEvent): void => {
+      if (pendingBind === null) return;
+      if (!this.elements.settings?.classList.contains('active')) { pendingBind = null; renderBinds(); return; }
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (ev.code === 'Escape') { pendingBind = null; renderBinds(); return; }
+      const action = pendingBind;
+      pendingBind = null;
+      assignBind(action, ev.code);
+      renderBinds();
+    };
+    const captureMouse = (ev: MouseEvent): void => {
+      if (pendingBind === null || ev.button < 1) return;
+      if ((ev.target as HTMLElement | null)?.closest?.('.kb-btn')) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      const action = pendingBind;
+      pendingBind = null;
+      assignBind(action, `Mouse${ev.button}`);
+      renderBinds();
+    };
+    window.addEventListener('keydown', captureKey, true);
+    window.addEventListener('mousedown', captureMouse, true);
+    el.querySelector('#reset-keys')?.addEventListener('click', () => {
+      const defaults = (this.bundle.settings as unknown as ClientSettings).keybinds;
+      this.settings.value.keybinds = { ...defaults };
+      this.settings.save();
+      this.cb.onSettingsChanged();
+      renderBinds();
+      this.toast('Đã đặt lại phím mặc định.');
+    });
+    renderBinds();
+    el.querySelector('#set-lang')?.addEventListener('change', (e) => {
+      this.settings.value.gameplay.language = (e.target as HTMLSelectElement).value;
+      this.settings.save();
+      location.reload();
+    });
     el.querySelector('#reset-settings')?.addEventListener('click', () => {
       this.settings.reset(this.bundle.settings as unknown as ClientSettings);
       location.reload();
@@ -653,9 +793,13 @@ export class Menus {
             </ul>
             <p style="margin-top:12px">Đây là danh sách cần kiểm tra, không phải tư vấn pháp lý.</p>
             <div class="brief-stats" style="margin-top:12px"><div><b>0</b><span>FLAGS BẬT</span></div><div><b>0</b><span>GIAO DỊCH THẬT</span></div></div>
+            <button class="btn" id="open-lookdev" style="margin-top:12px">Mở trang chẩn đoán renderer</button>
           </div>
         </div></div>
-      </div>`).querySelector('[data-act="back"]')?.addEventListener('click', () => this.show('main'));
+      </div>`);
+    const aboutEl = this.elements.about;
+    aboutEl?.querySelector('[data-act="back"]')?.addEventListener('click', () => this.show('main'));
+    aboutEl?.querySelector('#open-lookdev')?.addEventListener('click', () => { location.search = '?lookdev=1'; });
   }
 
   private buildPause(): void {
@@ -714,6 +858,8 @@ export class Menus {
     }
     if (name === 'main') this.refreshProfile();
     if (name === 'setup') this.refreshSetup();
+    const screen = this.elements[name];
+    if (screen) localizeDom(screen);
   }
 
   hideAll(): void { this.show(''); }
@@ -769,7 +915,7 @@ export class Menus {
     el.classList.add('active');
     const overlay = el.querySelector('.overlay-screen') as HTMLElement;
     overlay.style.display = 'flex';
-    (el.querySelector('#res-title') as HTMLElement).textContent = stats.won ? 'Chiến thắng' : 'Thất bại';
+    (el.querySelector('#res-title') as HTMLElement).textContent = t(stats.won ? 'Chiến thắng' : 'Thất bại');
     (el.querySelector('#res-title') as HTMLElement).style.color = stats.won ? 'var(--accent)' : 'var(--danger)';
     (el.querySelector('#res-t') as HTMLElement).textContent = String(stats.scoreT);
     (el.querySelector('#res-ct') as HTMLElement).textContent = String(stats.scoreCT);
@@ -789,13 +935,13 @@ export class Menus {
   }
 
   toast(text: string, error = false): void {
-    const t = this.elements.toast;
-    if (!t) return;
-    t.textContent = text;
-    t.classList.toggle('error', error);
-    t.classList.add('show');
+    const toastEl = this.elements.toast;
+    if (!toastEl) return;
+    toastEl.textContent = text;
+    toastEl.classList.toggle('error', error);
+    toastEl.classList.add('show');
     window.clearTimeout(this.toastTimer);
-    this.toastTimer = window.setTimeout(() => t.classList.remove('show'), 2600);
+    this.toastTimer = window.setTimeout(() => toastEl.classList.remove('show'), 2600);
   }
 
   currentSetup(): typeof this.setupState { return { ...this.setupState }; }

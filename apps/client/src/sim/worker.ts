@@ -29,6 +29,7 @@ let recorder: ReplayRecorder | null = null;
 let replayQueue: { tick: number; cmd: InputCommand }[] = [];
 let replayIndex = 0;
 let replayMode = false;
+let replaySpeed = 1;
 
 function post(msg: WorkerOut, transfer?: Transferable[]): void {
   ctx.postMessage(msg, transfer ?? []);
@@ -117,19 +118,20 @@ function init(options: OfflineOptions): void {
   }
   host = new SimHost(sim, bundle.data, map, bundle.bots, entries);
   sim.start();
-  lastHumanSeq = 0; pendingInput = null; eventAccum = []; tickInLoop = 0; ended = false; paused = false;
+  lastHumanSeq = 0; pendingInput = null; eventAccum = []; tickInLoop = 0; ended = false; paused = false; replaySpeed = 1;
   post({ type: 'ready', youId, roster, mapId: map.json.id });
   let last = performance.now();
   let acc = 0;
   const stepMs = 1000 / TICK_RATE;
   timer = setInterval(() => {
     const now = performance.now();
-    acc += now - last;
+    acc += (now - last) * (replayMode ? replaySpeed : 1);
     last = now;
     // giới hạn bắt kịp để tránh spiral of death
-    if (acc > stepMs * 6) acc = stepMs * 6;
+    const stepCap = replayMode ? 16 : 6;
+    if (acc > stepMs * stepCap) acc = stepMs * stepCap;
     let steps = 0;
-    while (acc >= stepMs && steps < 4) {
+    while (acc >= stepMs && steps < (replayMode ? 12 : 4)) {
       if (!paused) tickOnce();
       acc -= stepMs;
       steps++;
@@ -204,6 +206,7 @@ ctx.onmessage = (ev: MessageEvent<WorkerIn>) => {
   }
   if (msg.type === 'pause') { paused = true; return; }
   if (msg.type === 'resume') { paused = false; return; }
+  if (msg.type === 'speed') { replaySpeed = Math.max(0.25, Math.min(8, msg.speed)); return; }
   if (msg.type === 'buy') {
     if (!sim || replayMode) return;
     const res = sim.buy(youId, msg.itemId);

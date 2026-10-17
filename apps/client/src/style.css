@@ -354,3 +354,73 @@ body[data-reduced-motion="true"] *::after {
   pointer-events: none;
 }
 .subtitles.on { opacity: 1; }
+
+/* ==== keybind ==== */
+.keybind-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 14px; }
+.kb-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line-soft); font-size: 12px; color: var(--muted); }
+.kb-btn { min-width: 84px; padding: 5px 8px; background: #0b1116; color: var(--text); border: 1px solid var(--line); font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; cursor: pointer; }
+.kb-btn:hover { border-color: var(--accent); color: var(--accent-2); }
+.kb-btn.waiting { border-color: var(--accent); color: var(--accent); animation: kbPulse 1s infinite alternate; }
+@keyframes kbPulse { from { background: rgba(224,180,66,.08); } to { background: rgba(224,180,66,.22); } }
+
+/* ==== replay bar ==== */
+.replay-bar {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: rgba(4, 9, 13, 0.86);
+  border: 1px solid var(--line);
+  pointer-events: auto;
+  z-index: 30;
+}
+.replay-bar .rb-tag { color: var(--accent); font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; margin-right: 6px; }
+.replay-bar button { background: #0b1116; color: var(--text); border: 1px solid var(--line); padding: 5px 9px; font-family: var(--font-mono); font-size: 10px; cursor: pointer; }
+.replay-bar button:hover { border-color: var(--accent); }
+.replay-bar button.on { border-color: var(--accent); color: var(--accent); background: rgba(224, 180, 66, 0.1); }
+
+/* ==== look-dev / chẩn đoán ==== */
+.lookdev-panel {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: min(360px, 92vw);
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  padding: 14px;
+  background: rgba(6, 11, 15, 0.92);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text);
+  z-index: 90;
+  pointer-events: auto;
+}
+.ld-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.ld-head b { display: block; color: var(--accent); letter-spacing: 2px; font-size: 11px; }
+.ld-head span { color: var(--muted); font-size: 10px; }
+.ld-x { background: transparent; color: var(--muted); border: 1px solid var(--line); width: 26px; height: 26px; cursor: pointer; }
+.ld-row { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line-soft); }
+.ld-row span { color: var(--muted); }
+.ld-row b { max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ld-presets { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin: 10px 0; }
+.ld-presets button { background: #0b1116; color: var(--muted); border: 1px solid var(--line); padding: 5px 2px; font-size: 9px; cursor: pointer; }
+.ld-presets button.on { border-color: var(--accent); color: var(--accent); }
+.ld-links { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.ld-link { background: transparent; color: var(--accent-2); border: 1px solid var(--line); padding: 4px 7px; font-size: 10px; cursor: pointer; text-decoration: none; }
+.ld-link:hover { border-color: var(--accent); }
+.ld-check { border-top: 1px solid var(--line); padding-top: 8px; margin-bottom: 8px; }
+.ld-check b { color: var(--accent); letter-spacing: 1px; }
+.ld-check ul { margin: 6px 0 0; padding-left: 16px; color: var(--muted); line-height: 1.6; }
+.ld-assets { border-top: 1px solid var(--line); padding-top: 8px; }
+.ld-assets > b { color: var(--accent); letter-spacing: 1px; }
+.ld-asset { display: grid; grid-template-columns: 1fr auto auto; gap: 6px; padding: 3px 0; color: var(--muted); font-size: 10px; }
+.ld-asset em { font-style: normal; color: var(--ok); }
+.ld-asset.ph em { color: var(--danger); }
+.ld-asset.ph span:first-child::after { content: ' ⚠'; color: var(--danger); }
+.ld-foot { margin-top: 10px; color: #5f7183; font-size: 9.5px; line-height: 1.5; }
