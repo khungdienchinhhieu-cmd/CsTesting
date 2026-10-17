@@ -1,0 +1,86 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: tactical
+      POSTGRES_PASSWORD: tactical
+      POSTGRES_DB: tactical
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tactical -d tactical"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks: [internal]
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    volumes:
+      - redisdata:/data
+    networks: [internal]
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT_API: "8080"
+      DATABASE_URL: postgres://tactical:tactical@postgres:5432/tactical
+      REDIS_URL: redis://redis:6379
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:?dat JWT_ACCESS_SECRET trong .env}
+      PUBLIC_ORIGIN: http://localhost:8081
+      START_CREDITS: "2500"
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+    networks: [internal]
+
+  gameserver:
+    build:
+      context: .
+      dockerfile: apps/gameserver/Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT_GAMESERVER: "8443"
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:?dat JWT_ACCESS_SECRET trong .env}
+      PUBLIC_ORIGIN: http://localhost:8081
+      ALLOW_GUEST: "true"
+      DATA_DIR: /app/data
+    depends_on:
+      redis: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8443/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+    networks: [internal]
+
+  client:
+    build:
+      context: .
+      dockerfile: apps/client/Dockerfile
+    ports:
+      - "8081:80"
+    depends_on: [api, gameserver]
+    networks: [internal]
+
+volumes:
+  pgdata:
+  redisdata:
+
+networks:
+  internal:
+    driver: bridge

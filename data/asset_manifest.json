@@ -1,0 +1,170 @@
+{
+  "version": 1,
+  "generatedBy": "tools/validate-assets.ts",
+  "assets": [
+    {
+      "id": "proc_lookdev_room",
+      "type": "scene",
+      "path": "apps/client/src/render/lookdev.ts",
+      "source": "procedural",
+      "author": "Tactical Strike Team",
+      "license": "project-original",
+      "aiGenerated": false,
+      "status": "placeholder",
+      "hero": false,
+      "budget": {
+        "triangles": 6000,
+        "textureMax": 0,
+        "drawCalls": 8
+      },
+      "notes": "PLACEHOLDER — phòng look-dev TSL thủ tục để kiểm chất liệu/ánh sáng. Thay bằng art pass ở M14."
+    },
+    {
+      "id": "proc_character",
+      "type": "character",
+      "path": "apps/client/src/render/characters.ts",
+      "source": "procedural",
+      "author": "Tactical Strike Team",
+      "license": "project-original",
+      "aiGenerated": false,
+      "status": "placeholder",
+      "hero": true,
+      "budget": {
+        "triangles": 18000,
+        "textureMax": 2048,
+        "bones": 45
+      },
+      "notes": "PLACEHOLDER — nhân vật blockout có rig chuẩn để kiểm hitbox/animation. Cần rig tay + skin weights thật."
+    },
+    {
+      "id": "proc_weapon_viewmodel",
+      "type": "weapon_viewmodel",
+      "path": "apps/client/src/render/viewmodel.ts",
+      "source": "procedural",
+      "author": "Tactical Strike Team",
+      "license": "project-original",
+      "aiGenerated": false,
+      "status": "placeholder",
+      "hero": true,
+      "budget": {
+        "triangles": 6000,
+        "textureMax": 1024,
+        "bones": 12
+      },
+      "notes": "PLACEHOLDER — súng/dao dạng hộp để kiểm animation & recoil."
+    },
+    {
+      "id": "proc_weapon_world",
+      "type": "weapon_world",
+      "path": "apps/client/src/render/weaponMesh.ts",
+      "source": "procedural",
+      "author": "Tactical Strike Team",
+      "license": "project-original",
+      "aiGenerated": false,
+      "status": "placeholder",
+      "hero": false,
+      "budget": {
+        "triangles": 9000,
+        "textureMax": 1024
+      },
+      "notes": "PLACEHOLDER — weapon world model cho dropped weapons."
+    },
+    {
+      "id": "map_sandstorm_blockout",
+      "type": "map",
+      "path": "data/maps/sandstorm.json",
+      "source": "procedural",
+      "author": "Tactical Strike Team",
+      "license": "project-original",
+      "aiGenerated": false,
+      "status": "placeholder",
+      "hero": false,
+      "budget": {
+        "triangles": 200000,
+        "textureMax": 1024,
+        "drawCalls": 120
+      },
+      "notes": "PLACEHOLDER — blockout Sandstorm; art pass + lightmap ở M14."
+    },
+    {
+      "id": "map_warehouse_blockout",
+      "type": "map",
+      "path": "data/maps/warehouse.json",
+      "source": "procedural",
+      "author": "Tactical Strike Team",
+      "license": "project-original",
+      "aiGenerated": false,
+      "status": "placeholder",
+      "hero": false,
+      "budget": {
+        "triangles": 180000,
+        "textureMax": 1024,
+        "drawCalls": 120
+      },
+      "notes": "PLACEHOLDER — blockout Warehouse."
+    },
+    {
+      "id": "map_range_blockout",
+      "type": "map",
+      "path": "data/maps/range.json",
+      "source": "procedural",
+      "author": "Tactical Strike Team",
+      "license": "project-original",
+      "aiGenerated": false,
+      "status": "placeholder",
+      "hero": false,
+      "budget": {
+        "triangles": 60000,
+        "textureMax": 1024,
+        "drawCalls": 40
+      },
+      "notes": "PLACEHOLDER — trường bắn Range."
+    },
+    {
+      "id": "audio_proc_placeholder",
+      "type": "audio",
+      "path": "apps/client/src/audio/audio.ts",
+      "source": "procedural",
+      "author": "Tactical Strike Team",
+      "license": "project-original",
+      "aiGenerated": false,
+      "status": "placeholder",
+      "hero": false,
+      "budget": {
+        "files": 0
+      },
+      "notes": "PLACEHOLDER — âm thanh tổng hợp Web Audio; thay bằng thư viện CC0 đã kiểm giấy phép."
+    },
+    {
+      "id": "fx_proc_effects",
+      "type": "vfx",
+      "path": "apps/client/src/render/effects.ts",
+      "source": "procedural",
+      "author": "Tactical Strike Team",
+      "license": "project-original",
+      "aiGenerated": false,
+      "status": "placeholder",
+      "hero": false,
+      "budget": {
+        "triangles": 12000,
+        "textureMax": 512
+      },
+      "notes": "PLACEHOLDER — smoke flash spark thủ tục."
+    },
+    {
+      "id": "skin_tsl_palette",
+      "type": "material",
+      "path": "apps/client/src/render/skins.ts",
+      "source": "procedural",
+      "author": "Tactical Strike Team",
+      "license": "project-original",
+      "aiGenerated": false,
+      "status": "placeholder",
+      "hero": false,
+      "budget": {
+        "textureMax": 1024
+      },
+      "notes": "PLACEHOLDER — uber-shader palette TSL cho 6 skin gốc."
+    }
+  ]
+}

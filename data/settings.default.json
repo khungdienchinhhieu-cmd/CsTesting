@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "sensitivity": 2.2,
+  "zoomSensitivityMultiplier": 0.85,
+  "fov": 90,
+  "viewmodelFov": 68,
+  "invertY": false,
+  "rawInput": true,
+  "audio": {
+    "master": 0.8,
+    "sfx": 0.9,
+    "music": 0.5,
+    "voice": 0.8,
+    "ui": 0.7
+  },
+  "graphics": {
+    "preset": "medium",
+    "resolutionScale": 1.0,
+    "dynamicResolution": true,
+    "targetFps": 144,
+    "vsync": false,
+    "taa": true,
+    "sharpen": true,
+    "bloom": 0.25,
+    "lut": true,
+    "ssr": false,
+    "gtao": true,
+    "motionBlur": false,
+    "filmGrain": false,
+    "chromaticAberration": false,
+    "depthOfFieldMenus": true,
+    "anisotropy": 8,
+    "smokeQuality": "volumetric",
+    "particleQuality": "normal",
+    "shadowQuality": "csm2",
+    "ragdolls": false,
+    "hdr": false
+  },
+  "hud": {
+    "crosshair": {
+      "style": "classic",
+      "size": 6,
+      "gap": 3,
+      "thickness": 1.5,
+      "color": "#5cf07a",
+      "outline": true,
+      "dot": false
+    },
+    "showFps": false,
+    "showNetGraph": false,
+    "radarZoom": 1.0,
+    "hudScale": 1.0
+  },
+  "gameplay": {
+    "autoPickup": true,
+    "toggleWalk": false,
+    "toggleCrouch": false,
+    "switchOnEmpty": true,
+    "showDamageNumbers": false,
+    "reducedMotion": false,
+    "minimalHitEffects": false,
+    "language": "vi"
+  },
+  "keybinds": {
+    "forward": "KeyW",
+    "back": "KeyS",
+    "left": "KeyA",
+    "right": "KeyD",
+    "jump": "Space",
+    "crouch": "ControlLeft",
+    "walk": "ShiftLeft",
+    "use": "KeyE",
+    "reload": "KeyR",
+    "drop": "KeyG",
+    "inspect": "KeyF",
+    "slotPrimary": "Digit1",
+    "slotSecondary": "Digit2",
+    "slotKnife": "Digit3",
+    "slotGrenade": "Digit4",
+    "scope": "Mouse2",
+    "buyMenu": "KeyB",
+    "scoreboard": "Tab",
+    "teamChat": "KeyY",
+    "allChat": "KeyU",
+    "radio": "KeyX",
+    "toggleConsole": "Backquote",
+    "debugOverlay": "F3",
+    "pushToTalk": "KeyV"
+  },
+  "privacy": {
+    "telemetryConsent": false,
+    "matchHistoryPublic": false,
+    "shareGameplayForBotTraining": false
+  },
+  "accessibility": {
+    "colorBlind": "off",
+    "subtitles": false,
+    "highContrast": false,
+    "uiScale": 1.0
+  }
+}

@@ -1,0 +1,16 @@
+node_modules/
+dist/
+build/
+coverage/
+playwright-report/
+test-results/
+.visual-actual/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+apps/client/public/assets/generated/
+data/generated/
+*.tsbuildinfo
+.pnpm-store/

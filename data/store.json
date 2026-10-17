@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "currency": "Credits",
+  "note": "Chỉ bán vật phẩm thẩm mỹ và bộ sưu tập. Không bán loot box khi flag lootBoxes tắt.",
+  "products": [
+    {"id": "store_dune_pack", "name": "Sandfall Starter", "price": 1200, "type": "bundle",
+     "items": ["finish_dune_veil", "finish_ember_wash"], "badge": "starter"},
+    {"id": "store_night_pack", "name": "Neon Drift Pack", "price": 2400, "type": "bundle",
+     "items": ["finish_night_grid", "finish_frostline"], "badge": "featured"},
+    {"id": "store_knife_obsidian", "name": "Obsidian Flux Knife", "price": 8000, "type": "single",
+     "items": ["finish_obsidian_flux"], "badge": "legendary"},
+    {"id": "store_credits_small", "name": "Starter Credits", "price": 0, "type": "credits",
+     "credits": 500, "note": "Tặng một lần cho tài khoản mới, không nạp tiền thật."}
+  ]
+}

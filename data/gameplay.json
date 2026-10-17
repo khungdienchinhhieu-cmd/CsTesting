@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "tickRate": 64,
+  "movement": {
+    "gravity": 15.2,
+    "jumpVelocity": 4.72,
+    "friction": 5.4,
+    "stopSpeed": 1.4,
+    "groundAccel": 5.6,
+    "airAccel": 12.0,
+    "airWishCap": 1.15,
+    "walkMultiplier": 0.52,
+    "crouchMultiplier": 0.34,
+    "maxFallSpeed": 45,
+    "stepHeight": 0.35,
+    "playerRadius": 0.32,
+    "standHeight": 1.82,
+    "crouchHeight": 1.32,
+    "standEye": 1.64,
+    "crouchEye": 1.16,
+    "maxSpeedTolerance": 1.6,
+    "maxAngleDeltaPerTickDeg": 22
+  },
+  "round": {
+    "freezeTimeSec": 15,
+    "roundTimeSec": 115,
+    "bombTimeSec": 40,
+    "plantTimeSec": 3.2,
+    "defuseTimeSec": 10,
+    "defuseKitTimeSec": 5,
+    "postRoundSec": 4,
+    "warmupSec": 20,
+    "buyTimeSec": 20,
+    "roundsToWin": 13,
+    "maxRounds": 24,
+    "halftimeSwitchRound": 12,
+    "overtimeEnabled": true,
+    "overtimeRounds": 3,
+    "overtimeStartMoney": 10000,
+    "bombDamage": 500,
+    "bombDamageRadius": 18
+  },
+  "combat": {
+    "maxLagCompMs": 200,
+    "hitboxHistorySec": 2,
+    "spreadRecoveryPerSec": 6,
+    "recoilResetSec": 0.4,
+    "armorHelmetHeadshotReduction": 0.5,
+    "penetrationDamageFalloff": 0.65,
+    "maxPenetrations": 2,
+    "friendlyFire": false,
+    "selfDamage": false
+  },
+  "bomb": {
+    "beepIntervalStartSec": 1.0,
+    "beepIntervalEndSec": 0.12,
+    "plantRadius": 0.0,
+    "defusePromptSec": 0.35
+  },
+  "smoke": {
+    "voxelGrid": 40,
+    "voxelWorldSize": 8.4,
+    "fillRadiusCells": 15,
+    "softEdgeCells": 3,
+    "bulletHoleRadiusM": 0.32,
+    "heHoleRadiusM": 1.1,
+    "deployTimeSec": 1.2,
+    "durationSec": 18,
+    "chokeDensity": 0.62
+  },
+  "flash": {
+    "maxBlindSec": 4.6,
+    "minBlindSec": 0.35,
+    "angleWeight": 0.75,
+    "distanceFalloffM": 25
+  },
+  "buy": {
+    "allowDuringFreezeOnly": true,
+    "refundWindowSec": 10,
+    "dropWeaponEnabled": true
+  },
+  "range": {
+    "infiniteMoney": true,
+    "targetRespawnSec": 1.2,
+    "showDamage": true
+  },
+  "matchmaking": {
+    "baseRating": 1500,
+    "ratingWindowStart": 250,
+    "ratingWindowGrowPerSec": 25,
+    "maxRatingWindow": 900,
+    "acceptTimeoutSec": 20,
+    "queueTimeoutSec": 300
+  },
+  "chat": {
+    "maxLength": 180,
+    "rateLimitPer10Sec": 6,
+    "filterProfanity": true
+  }
+}
